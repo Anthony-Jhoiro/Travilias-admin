@@ -1,22 +1,34 @@
-import {createWebHistory,createRouter, RouteRecordRaw } from "vue-router";
-import HelloWorld from "../components/HelloWorld.vue";
-import HelloFrance from "../components/HelloFrance.vue";
+import { createWebHistory, createRouter, RouteRecordRaw } from "vue-router";
+import { DefaultComponent } from "../components/shared";
 
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
-    
-    redirect: "/foo"
+    redirect: "/suggestions",
   },
   {
-    path: "/foo",
-    name: "HelloWorld",
-    component: HelloWorld,
+    path: "/suggestions",
+    component: DefaultComponent,
   },
   {
-    path: "/bar",
-    name: "HelloFrance",
-    component: HelloFrance,
+    path: "/banlist",
+    component: DefaultComponent,
+  },
+  {
+    path: "/pins",
+    component: DefaultComponent,
+  },
+  {
+    path: "/posts",
+    component: DefaultComponent,
+  },
+  {
+    path: "/statistics",
+    component: DefaultComponent,
+  },
+  {
+    path: "/images",
+    component: DefaultComponent,
   },
 ];
 
