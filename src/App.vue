@@ -32,6 +32,7 @@ export default defineComponent({
 body {
   padding: 0;
   margin: 0;
+  overflow: hidden;
 }
 
 main {

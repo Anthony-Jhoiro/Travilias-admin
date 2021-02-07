@@ -1,14 +1,23 @@
 <template>
-  <div class="main-navigation">
-    <div class="title-container">
-      <h1 class="title">
-        <router-link to="/"> Travilias - Admin</router-link>
-      </h1>
-    </div>
-    <div v-for="route in routes" :key="route.name" class="link-container">
-      <i class="fas icon" :class="route.icon" />
-      <router-link :to="route.path">{{ route.name }}</router-link>
-    </div>
+  <div class="sidebar" v-bind:class="[open ? 'sidebar-open' : 'sidebar-close']">
+    <h1 class="sidebar-title">Travilias - Admin</h1>
+    <!-- Start Toggle button -->
+    <button class="sidebar_toggle_btn" @click="toggleOpening">
+      <i class="fas" v-bind:class="[open ? 'fa-times' : 'fa-bars']" />
+    </button>
+    <!-- End Toggle button -->
+
+    <!-- Start Route link -->
+    <router-link
+      v-for="route in routes"
+      :key="route.name"
+      :to="route.path"
+      class="route-link"
+    >
+      <i class="fas icon route-icon" :class="route.icon" />
+      <span v-if="open" class="route-name">{{ route.name }}</span>
+    </router-link>
+    <!-- End Route link -->
   </div>
 </template>
 
@@ -53,46 +62,102 @@ export default defineComponent({
       ],
     };
   },
+  data() {
+    return {
+      open: false,
+    };
+  },
+  methods: {
+    toggleOpening() {
+      this.open = !this.open;
+    },
+  },
 });
 </script>
 
 <style scoped>
-.main-navigation {
-  background-color: #19647e;
-  color: #fff;
-  width: 18rem;
+.sidebar {
+  background-color: #2f323a;
   height: 100vh;
+  transition: 0.3s;
+  transition-property: width;
 }
-.main-navigation a {
+
+.sidebar-open {
+  width: 250px;
+}
+
+.sidebar-close {
+  width: 60px;
+  padding-top: 3.5em;
+}
+
+.sidebar-open .sidebar-title {
+  overflow: hidden;
+  white-space: nowrap;
   color: #fff;
-  text-decoration: none;
-  font-size: 1.2em;
-  outline: none;
-}
-
-.main-navigation a.router-link-active {
-  border-bottom: 1.5px solid #fff;
-}
-
-.link-container {
-  margin: 1.5em;
-}
-.link-container .icon {
-  margin-right: 1em;
-}
-
-.main-navigation .title-container .title {
+  width: 250px;
+  text-align: center;
   margin: 0;
-  font-size: 1.2em;
-}
-
-.title-container {
   padding-top: 1em;
   padding-bottom: 1em;
+  font-size: 1.5em;
+}
+
+.sidebar-close .sidebar-title {
+  display: none;
+}
+
+.sidebar .route-link {
+  color: #fff;
+  display: block;
+  width: 100%;
+  line-height: 60px;
+  text-decoration: none;
+  box-sizing: border-box;
+  transition: 0.1s;
+  transition-property: background-color;
+}
+
+.sidebar-open .route-link {
+  padding-left: 40px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.sidebar-close .route-link {
   text-align: center;
-  border-bottom: 2px solid #ddd;
-  margin-right: 20px;
-  margin-left: 20px;
-  margin-bottom: 3em;
+}
+
+.sidebar .route-link:hover {
+  background-color: #0d9dbb;
+}
+
+.sidebar-open .route-icon {
+  padding-right: 10px;
+}
+
+.sidebar_toggle_btn {
+  width: 100%;
+  line-height: 60px;
+  background: none;
+  border: none;
+  padding: 0;
+  outline: none;
+  color: #fff;
+  font-size: 25px;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.sidebar_toggle_btn:hover {
+  color: #0d9dbb;
+}
+
+.sidebar-close .route-link .route-name {
+  display: none;
+}
+
+.sidebar-close .route-link {
+  font-size: 20px;
 }
 </style>
