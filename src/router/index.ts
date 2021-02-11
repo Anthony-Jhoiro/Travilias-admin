@@ -1,5 +1,6 @@
 import { createWebHistory, createRouter, RouteRecordRaw } from "vue-router";
 import { DefaultComponent } from "../components/shared";
+import SuggestionsPage from "../components/pages/suggestions";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -8,7 +9,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: "/suggestions",
-    component: DefaultComponent,
+    component: SuggestionsPage,
   },
   {
     path: "/banlist",

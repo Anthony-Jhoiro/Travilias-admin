@@ -13,7 +13,7 @@ export interface User {
   displayedName: string;
   username: string;
   email: string;
-  profilePicture: Image;
+  profilePicture?: Image;
 }
 
 /**
@@ -134,4 +134,5 @@ export interface Suggestion {
   id: Id;
   message: string;
   user: User;
+  date: string;
 }
