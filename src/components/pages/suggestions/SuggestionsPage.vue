@@ -1,11 +1,11 @@
 <template>
     <div>
         <h1>Suggestion page</h1>
-        <div v-if="this.suggestions && this.users" class="container">
-            <div class="sugg" v-for="suggestion of suggestions" v-bind:key="suggestion">
+        <div v-if="suggestions && users" class="container">
+            <div class="sugg" v-for="suggestion of suggestions" v-bind:key="suggestion.id">
                 <p> {{ suggestion.message }} </p>
                 <div class="subInfos">
-                    <p>par {{ getUserById(suggestion.user).username }} </p>
+                    <p>par {{ suggestion.user.username }} </p>
                     <p>le {{ suggestion.date }} </p>
                 </div>
             </div>
@@ -40,20 +40,6 @@ import { Id, Suggestion, User } from '../../../types';
             });
         },
         methods: {
-            getUserById(id:Id):User{
-                
-                for (let user in this.users) {                    
-                    if (this.users[user].id == id){
-                        return this.users[user];
-                    }
-                }
-                return {
-                    id: "-1",
-                    displayedName: "no user found",
-                    username: "no user found",
-                    email: "no user found"
-                }
-            }
         },
         props: {
 
