@@ -30,7 +30,6 @@
              return {
                  suggestions: Array<Suggestion>(),
                  users: Array<User>(),
-                 color: "00ffff"
             }
         },
         beforeMount() {
@@ -56,31 +55,4 @@
 
 <style>
 
-    .container {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-gap: 100px;
-        grid-auto-rows: minmax(100px, auto);
-        width: 90%;
-        margin-left: 5%;
-    }
-
-    .sugg {
-        border: 1px solid black;
-        border-radius: 10px;
-        box-shadow: 0 0 4px black;
-        background-color: #EEE;
-        padding: 10px;
-        padding-bottom: 0;
-    }
-
-    .subInfos {
-        display: flex;
-        justify-content: space-between;
-        border-top: 1px solid #222;
-    }
-
-    .subInfos p {
-        color: #555;
-    }
 </style>
