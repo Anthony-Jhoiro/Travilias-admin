@@ -19,7 +19,8 @@
     // api
     import SuggestionsController from "../../../controllers/suggestions.controller";
     import UsersController from "../../../controllers/users.controller";
-import { Id, Suggestion, User } from '../../../types';
+    import { Id, Suggestion, User } from '../../../types';
+
     export default defineComponent({
         name: 'SuggestionsPage',
         components: {
@@ -29,6 +30,7 @@ import { Id, Suggestion, User } from '../../../types';
              return {
                  suggestions: Array<Suggestion>(),
                  users: Array<User>(),
+                 color: "00ffff"
             }
         },
         beforeMount() {
