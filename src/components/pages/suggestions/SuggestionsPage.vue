@@ -1,15 +1,31 @@
 <template>
     <div>
-        <h1>Suggestion page</h1>
-        <div v-if="suggestions && users" class="container">
-            <div class="sugg" v-for="suggestion of suggestions" v-bind:key="suggestion.id">
-                <p> {{ suggestion.message }} </p>
-                <div class="subInfos">
-                    <p>par {{ suggestion.user.username }} </p>
-                    <p>le {{ suggestion.date }} </p>
-                </div>
-            </div>
+        <div class="container">
+            <Card v-for="(suggestion, index) of suggestions" v-bind:key="index">
+                <template #header>
+                    <div class="action-btns">
+                        <div>
+                            <font-awesome-icon icon="language" />
+                        </div>
+                        <div>
+                            <font-awesome-icon icon="reply" />
+                        </div>
+                        <div @click="toPin(suggestion)">
+                            <font-awesome-icon icon="thumbtack" />
+                        </div>
+                    </div>
+                </template>
+                <template #content>
+                    <p>{{suggestion.message}}</p>
+                </template>
+                <template #footer>
+                    <p>le {{suggestion.date}}</p>
+                    <p>par <Tag :value="suggestion.user.username"></Tag></p>
+                </template>
+            </Card>
         </div>
+
+        <Toast position="top-left"/>
     </div>
 </template>
 
@@ -19,7 +35,12 @@
     // api
     import SuggestionsController from "../../../controllers/suggestions.controller";
     import UsersController from "../../../controllers/users.controller";
-    import { Id, Suggestion, User } from '../../../types';
+    import { Suggestion, User } from '../../../types';
+
+    import { useToast } from "primevue/usetoast";
+
+    // icons
+
 
     export default defineComponent({
         name: 'SuggestionsPage',
@@ -42,6 +63,16 @@
             });
         },
         methods: {
+            toPin(suggestion:Suggestion){
+                SuggestionsController.pinSuggestion(suggestion).then((res) => {
+                    if(res.success){
+                        this.$toast.add({severity:'success', summary: res.message, detail:res.detail, life: 1200});
+                    }
+                    else {
+                        this.$toast.add({severity:'error', summary: res.message, detail:res.detail, life: 3000});
+                    }
+                })
+            }
         },
         props: {
 
@@ -63,24 +94,32 @@
         grid-auto-rows: minmax(100px, auto);
         width: 90%;
         margin-left: 5%;
+        margin-top: 5vh;
     }
 
-    .sugg {
-        border: 1px solid black;
-        border-radius: 10px;
-        box-shadow: 0 0 4px black;
-        background-color: #EEE;
-        padding: 10px;
-        padding-bottom: 0;
-    }
-
-    .subInfos {
+    .action-btns {
+        background-color: #9fa8da;
+        width: 30%;
+        margin-left: 70%;
+        padding: 2px;
         display: flex;
-        justify-content: space-between;
-        border-top: 1px solid #222;
+        justify-content: space-around;
     }
 
-    .subInfos p {
-        color: #555;
+    .action-btns > div {
+        color: black;
+        cursor: pointer;
+        width: 30%;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        background-color: #9098c6;
     }
+
+/*     .action-btns *:hover {
+        color: #00f;
+    } */
+
 </style>
