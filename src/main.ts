@@ -19,6 +19,10 @@ import Card from 'primevue/card';
 import Tag from 'primevue/tag';
 import Toast from 'primevue/toast';
 import ToastService from 'primevue/toastservice';
+import Dialog from 'primevue/dialog';
+import Button from 'primevue/button';
+import InputText from 'primevue/inputtext';
+import Textarea from 'primevue/textarea';
 
 library.add(faLanguage);
 library.add(faReply);
@@ -30,6 +34,10 @@ createApp(App)
     .component('Card', Card)
     .component('Tag', Tag)
     .component('Toast', Toast)
+    .component('Dialog', Dialog)
+    .component('Button', Button)
+    .component('InputText', InputText)
+    .component('Textarea', Textarea)
     .component('font-awesome-icon', FontAwesomeIcon)
     .use(router)
     .mount('#app')

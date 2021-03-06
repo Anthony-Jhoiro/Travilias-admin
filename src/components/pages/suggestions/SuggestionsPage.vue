@@ -8,7 +8,7 @@
                             <font-awesome-icon icon="language" />
                         </div>
                         <div>
-                            <font-awesome-icon icon="reply" />
+                            <font-awesome-icon icon="reply" @click="displayAnswer = true; answer.suggestion = suggestion"/>
                         </div>
                         <div @click="toPin(suggestion)">
                             <font-awesome-icon icon="thumbtack" />
@@ -26,6 +26,25 @@
         </div>
 
         <Toast position="top-left"/>
+
+        <Dialog header="Répondre" v-model:visible="displayAnswer" :style="{width: '25vw'}" :modal="true">
+            <h5>à <Tag :value="answer.suggestion.user.username"></Tag></h5>
+            <div class="answerForm">
+                <div>
+                    <label for="titreReponse">Titre :</label>
+                    <InputText id="titreReponse" type="text" v-model="answer.title"/>
+                </div>
+                <div>
+                    <label>message :</label>
+                    <Textarea cols="30" rows="10" v-model="answer.message"/>
+                </div>
+            </div>
+            <template #footer>
+                <Button label="Annuler" class="p-button-danger"  @click="displayAnswer = false"/>
+                <Button label="Répondre"  @click="answerTo"/>
+            </template>
+        </Dialog>
+
     </div>
 </template>
 
@@ -51,7 +70,15 @@
              return {
                  suggestions: Array<Suggestion>(),
                  users: Array<User>(),
-                 color: "00ffff"
+                 color: "00ffff",
+
+                 displayAnswer: false,
+                 
+                 answer: {
+                     suggestion: null,
+                     title: "",
+                     message: ""
+                 }
             }
         },
         beforeMount() {
@@ -71,7 +98,19 @@
                     else {
                         this.$toast.add({severity:'error', summary: res.message, detail:res.detail, life: 3000});
                     }
-                })
+                });
+            },
+
+            answerTo() {
+                SuggestionsController.answer(this.answer).then((res) => {
+                    if(res.success){
+                        this.$toast.add({severity:'success', summary: res.message, detail:res.detail, life: 1500});
+                    }
+                    else {
+                        this.$toast.add({severity:'error', summary: res.message, detail:res.detail, life: 3000});
+                    }
+                });
+                this.displayAnswer = false;
             }
         },
         props: {
@@ -118,8 +157,25 @@
         background-color: #9098c6;
     }
 
-/*     .action-btns *:hover {
-        color: #00f;
-    } */
+    .answerForm {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+    }
+
+    .answerForm input {
+        width: 100%;
+    }
+
+    .answerForm > div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: baseline;
+        width: 100%;
+        margin: 10px 0 10px 0;
+    }
 
 </style>
