@@ -13,7 +13,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.0-3",
     "express": "^4.17.1",
     "mitt": "^2.1.0",
-    "primevue": "^3.2.1",
+    "primevue": "^3.2.4",
     "vue": "^3.0.5",
     "vue-router": "^4.0.0"
   },
