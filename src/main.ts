@@ -3,6 +3,7 @@ import { createApp } from 'vue'
 // TypeScript: Select TypeScript version - > Use Workspace Version
 import App from './App.vue'
 import router from './router'
+//@ts-ignore
 import PrimeVue from 'primevue/config';
 import 'primevue/resources/themes/md-dark-indigo/theme.css';
 import "primevue/resources/primevue.min.css";
@@ -18,6 +19,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import Card from 'primevue/card';
 import Tag from 'primevue/tag';
 import Toast from 'primevue/toast';
+//@ts-ignore
 import ToastService from 'primevue/toastservice';
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';

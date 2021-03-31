@@ -56,8 +56,6 @@
     import UsersController from "../../../controllers/users.controller";
     import { Suggestion, User } from '../../../types';
 
-    import { useToast } from "primevue/usetoast";
-
     // icons
 
 
