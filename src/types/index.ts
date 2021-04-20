@@ -9,6 +9,21 @@ export enum ControlType {
   COPYRIGHT = "COPYRIGHT"
 }
 
+export const CONTROLS: {[key: string]: ControlType[]} = {
+  "ok": [
+    ControlType.VALID
+  ],
+  "warning": [
+    ControlType.COPYRIGHT,
+    ControlType.RESTRICTED
+  ],
+  "danger": [
+    ControlType.VIOLENCE,
+    ControlType.ILLEGAL_CONTENT,
+    ControlType.DISCRIMINATION
+  ]
+}
+
 /**
  * # User
  * - `id` - Identifier
@@ -63,7 +78,7 @@ export interface Image {
   created_at: Date;
   pined: boolean;
   controlType: ControlType;
-  controlledAt: Date;
+  controlledAt: Date | null;
 }
 
 /**
