@@ -65,7 +65,6 @@
 </script>
 
 <style>
-
     .container {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -117,5 +116,4 @@
         width: 100%;
         margin: 10px 0 10px 0;
     }
-
 </style>
