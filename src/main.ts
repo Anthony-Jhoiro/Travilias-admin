@@ -1,32 +1,33 @@
-import { createApp } from 'vue'
-// TypeScript error? Run VSCode command
-// TypeScript: Select TypeScript version - > Use Workspace Version
-import App from './App.vue'
-import router from './router'
-import PrimeVue from 'primevue/config';
-import 'primevue/resources/themes/md-dark-indigo/theme.css';
-import "primevue/resources/primevue.min.css";
-
-import { faLanguage } from '@fortawesome/free-solid-svg-icons'
-import { faReply } from '@fortawesome/free-solid-svg-icons'
-import { faThumbtack } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core'
-
-
-
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faCheck, faLanguage, faReply, faThumbtack } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import Button from 'primevue/button';
 import Card from 'primevue/card';
+import Chip from 'primevue/chip';
+import PrimeVue from 'primevue/config';
+import Dialog from 'primevue/dialog';
+import Galleria from 'primevue/galleria';
+import InputText from 'primevue/inputtext';
+import "primevue/resources/primevue.min.css";
+import 'primevue/resources/themes/md-dark-indigo/theme.css';
 import Tag from 'primevue/tag';
+import Textarea from 'primevue/textarea';
 import Toast from 'primevue/toast';
 import ToastService from 'primevue/toastservice';
-import Dialog from 'primevue/dialog';
-import Button from 'primevue/button';
-import InputText from 'primevue/inputtext';
-import Textarea from 'primevue/textarea';
+import { createApp } from 'vue';
+// TypeScript error? Run VSCode command
+// TypeScript: Select TypeScript version - > Use Workspace Version
+import App from './App.vue';
+import router from './router';
+
+
+
+
 
 library.add(faLanguage);
 library.add(faReply);
 library.add(faThumbtack);
+library.add(faCheck);
 
 createApp(App)
     .use(PrimeVue)
@@ -38,6 +39,8 @@ createApp(App)
     .component('Button', Button)
     .component('InputText', InputText)
     .component('Textarea', Textarea)
+    .component('Galleria', Galleria)
+    .component('Chip', Chip)
     .component('font-awesome-icon', FontAwesomeIcon)
     .use(router)
     .mount('#app')

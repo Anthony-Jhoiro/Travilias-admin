@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="container">
+        <div class="container"> <!-- TODO : Split in multiple components-->
             <Card v-for="(suggestion, index) of suggestions" v-bind:key="index">
                 <template #header>
                     <div class="action-btns">
@@ -81,7 +81,7 @@
                  }
             }
         },
-        beforeMount() {
+        beforeMount() { // TODO : should we use setup() instead ?
             SuggestionsController.getSuggestions().then((res) => {
                 this.suggestions = res;
             });
