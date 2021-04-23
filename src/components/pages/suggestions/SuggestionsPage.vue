@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="container">
-            <SuggestionCard v-for="(suggestion, index) of suggestions" v-bind:key="index" :suggestion="suggestion"/>
+            <SuggestionCard v-for="(suggestion, index) of suggestions" v-bind:key="index" :suggestion="suggestion" @answer="displayAnswerModale"/>
         </div>
 
-        <SuggestionAnswerModale :displayAnswer="displayAnswer" @answered="displayAnswer = false"/>
+        <SuggestionAnswerModale :displayAnswer="displayAnswer" :suggestion="suggestionToAnswer" @answered="displayAnswer = false"/>
 
     </div>
 </template>
@@ -29,18 +29,29 @@
 
         },
         data() {
-             return {
-                 suggestions: Array<Suggestion>(),
-                 users: Array<User>(),
-                 color: "00ffff",
+            return {
+                suggestions: Array<Suggestion>(),
+                users: Array<User>(),
+                color: "00ffff",
 
-                 displayAnswer: false,
-                 
-                 answer: {
-                     suggestion: null,
-                     title: "",
-                     message: ""
-                 }
+                displayAnswer: false,
+                suggestionToAnswer: {
+                id: "",
+                message: "",
+                user: {
+                    id: "",
+                    displayedName: "",
+                    username: "",
+                    email: "",
+                },
+                date: ""
+                } as Suggestion,
+                
+                answer: {
+                    suggestion: null,
+                    title: "",
+                    message: ""
+                }
             }
         },
         beforeMount() {
@@ -52,6 +63,10 @@
             });
         },
         methods: {
+            displayAnswerModale(suggestion:Suggestion) {
+                this.suggestionToAnswer = suggestion;
+                this.displayAnswer = true;
+            }
         },
         props: {
 

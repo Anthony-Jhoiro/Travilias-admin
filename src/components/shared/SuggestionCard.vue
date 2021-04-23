@@ -34,7 +34,7 @@
     },
     methods: {
       answer(suggestion:Suggestion) {
-
+        this.$emit('answer', suggestion);
       }
     },
     props: {
