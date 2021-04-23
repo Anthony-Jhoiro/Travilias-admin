@@ -8,12 +8,24 @@
 </template>
 
 <script lang="ts">
+import Keycloak from "keycloak-js";
 import { defineComponent } from "vue";
+import { useStore } from "vuex";
 import MainNavigation from "./components/shared/MainNavigation.vue";
+import { AuthenticationStoreOptions } from "./stores/authenticationStore";
 
-export default defineComponent({
+export default defineComponent<{}, {profile: Keycloak.KeycloakProfile}>({
   name: "App",
+  inject: ['profile'],
   components: { MainNavigation },
+  created() {
+    if (this.profile) {
+      // Pass the injected profile to vuex to avoid using the inject attribute more than one
+      const store = useStore<AuthenticationStoreOptions>();
+
+      store.commit('setProfile', this.profile);
+    }
+  }
 });
 </script>
 

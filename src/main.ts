@@ -1,9 +1,9 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
-    faCheck,
-    faLanguage,
-    faReply,
-    faThumbtack
+  faCheck,
+  faLanguage,
+  faReply,
+  faThumbtack
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import Button from "primevue/button";
@@ -25,14 +25,16 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import { KeycloakProvider } from "./keycloak-provider";
 import router from "./router";
+import { authenticationStore } from "./stores/authenticationStore";
 
 library.add(faLanguage);
 library.add(faReply);
 library.add(faThumbtack);
 library.add(faCheck);
 
-KeycloakProvider(() => {
+KeycloakProvider((profile) => {
   createApp(App)
+    // Add primevue elements
     .use(PrimeVue)
     .use(ToastService)
     .component("Card", Card)
@@ -44,7 +46,18 @@ KeycloakProvider(() => {
     .component("Textarea", Textarea)
     .component("Galleria", Galleria)
     .component("Chip", Chip)
+
+    // Add font awesome
     .component("font-awesome-icon", FontAwesomeIcon)
+
+    // Add router
     .use(router)
+
+    // Add prifile injection
+    .provide('profile', profile)
+
+    // Add stores
+    .use(authenticationStore)
+    
     .mount("#app");
 });

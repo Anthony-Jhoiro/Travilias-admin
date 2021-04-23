@@ -1,12 +1,10 @@
 import Keycloak from "keycloak-js";
 
 
-export function KeycloakProvider(callback: () => void) {
+export function KeycloakProvider(callback: (profile: Keycloak.KeycloakProfile) => void) {
   const url = import.meta.env.VITE_KEYCLOAK_URL ?? "";
   const realm = import.meta.env.VITE_KEYCLOAK_REALM ?? "";
   const clientId = import.meta.env.VITE_KEYCLOAK_CLIENT_ID ?? "";
-
-  console.log(url, realm, import.meta.env);
 
   let initOptions = {
     url: url as string,
@@ -25,7 +23,12 @@ export function KeycloakProvider(callback: () => void) {
       } else {
         console.info("Authenticated");
 
-        callback();
+        keycloak.loadUserProfile()
+        .then(() => {
+          if (keycloak.profile) {
+            callback(keycloak.profile)
+          }
+        });
       }
 
       //Token Refresh
@@ -34,7 +37,7 @@ export function KeycloakProvider(callback: () => void) {
           .updateToken(70)
           .then((refreshed) => {
             if (refreshed) {
-              console.info("Token refreshed" + refreshed);
+              console.info("Token refreshed " + refreshed);
             } else {
               if (!keycloak.tokenParsed?.exp || !keycloak.timeSkew) return;
 
