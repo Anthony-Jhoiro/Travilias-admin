@@ -1,12 +1,10 @@
 import axios from "axios";
 
-
 export enum HTTPMethods {
   GET = "GET",
   POST = "POST",
   PUT = "PUT",
-  DELETE = "DELETE"
-
+  DELETE = "DELETE",
 }
 
 /**
@@ -16,11 +14,21 @@ export enum HTTPMethods {
  * @param body body of the request (optional)
  * @returns the response data
  */
-export async function makeRequest<ResponseSchema = any>(method: HTTPMethods, url: string, body: object = {}): Promise<ResponseSchema> {
-  const response = await axios.request<{status: "ko", message: string}|{status: "ok", data: ResponseSchema}>({
+export async function makeRequest<ResponseSchema = any>(
+  method: HTTPMethods,
+  url: string,
+  body: object = {}
+): Promise<ResponseSchema> {
+  const headers: any = {};
+  
+
+  const response = await axios.request<
+    { status: "ko"; message: string } | { status: "ok"; data: ResponseSchema }
+  >({
     method: method,
-    url: "http://127.0.0.1:8080/api/v0" + url, // TODO : API endpoint in environment
-    data: body
+    url: "http://127.0.0.1:8080/api/v0" + url, // TODO : API endpoint in environment
+    data: body,
+    headers,
   });
 
   if (response.data.status === "ko") {

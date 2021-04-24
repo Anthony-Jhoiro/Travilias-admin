@@ -14,16 +14,16 @@ import { useStore } from "vuex";
 import MainNavigation from "./components/shared/MainNavigation.vue";
 import { AuthenticationStoreOptions } from "./stores/authenticationStore";
 
-export default defineComponent<{}, {profile: Keycloak.KeycloakProfile}>({
+export default defineComponent<{}, {keycloak: Keycloak.KeycloakInstance}>({
   name: "App",
-  inject: ['profile'],
+  inject: ['keycloak'],
   components: { MainNavigation },
   created() {
-    if (this.profile) {
-      // Pass the injected profile to vuex to avoid using the inject attribute more than one
+    if (this.keycloak) {
+      // Pass the injected keycloak instance to vuex to avoid using the inject attribute more than one
       const store = useStore<AuthenticationStoreOptions>();
 
-      store.commit('setProfile', this.profile);
+      store.commit('setKeycloakInstance', this.keycloak);
     }
   }
 });

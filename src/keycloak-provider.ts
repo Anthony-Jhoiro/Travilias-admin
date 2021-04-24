@@ -1,7 +1,7 @@
 import Keycloak from "keycloak-js";
 
 
-export function KeycloakProvider(callback: (profile: Keycloak.KeycloakProfile) => void) {
+export function KeycloakProvider(callback: (profile: Keycloak.KeycloakInstance) => void) {
   const url = import.meta.env.VITE_KEYCLOAK_URL ?? "";
   const realm = import.meta.env.VITE_KEYCLOAK_REALM ?? "";
   const clientId = import.meta.env.VITE_KEYCLOAK_CLIENT_ID ?? "";
@@ -26,7 +26,7 @@ export function KeycloakProvider(callback: (profile: Keycloak.KeycloakProfile) =
         keycloak.loadUserProfile()
         .then(() => {
           if (keycloak.profile) {
-            callback(keycloak.profile)
+            callback(keycloak)
           }
         });
       }

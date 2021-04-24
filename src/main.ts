@@ -32,7 +32,7 @@ library.add(faReply);
 library.add(faThumbtack);
 library.add(faCheck);
 
-KeycloakProvider((profile) => {
+KeycloakProvider((keycloak) => {
   createApp(App)
     // Add primevue elements
     .use(PrimeVue)
@@ -54,7 +54,7 @@ KeycloakProvider((profile) => {
     .use(router)
 
     // Add prifile injection
-    .provide('profile', profile)
+    .provide('keycloak', keycloak)
 
     // Add stores
     .use(authenticationStore)

@@ -78,7 +78,7 @@ export default defineComponent({
   computed: {
     displayedName() {
       const store = useStore<AuthenticationStoreOptions>();
-      const profile = store.state.profile;
+      const profile = store.getters.profile;
 
       return profile ? `${profile.firstName} ${profile.lastName}` : "";
     },
