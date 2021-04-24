@@ -14,8 +14,7 @@
 
     // api
     import SuggestionsController from "../../../controllers/suggestions.controller";
-    import UsersController from "../../../controllers/users.controller";
-    import { Suggestion, User } from '../../../types';
+    import { formatSuggestion, Suggestion, User } from '../../../types';
     import { SuggestionCard, SuggestionAnswerModale } from '../../shared';
 
     // icons
@@ -54,12 +53,15 @@
                 }
             }
         },
-        beforeMount() {
-            SuggestionsController.getSuggestions().then((res) => {
-                this.suggestions = res;
-            });
-            UsersController.getUsers().then((res) => {
-                this.users = res
+        mounted() {
+            SuggestionsController.getSuggestions().then((res:any) => {
+                console.log(res.data);
+                let suggestions = [];
+                for(let datum of res.data){
+                    suggestions.push(formatSuggestion(datum));
+                }
+                
+                this.suggestions = suggestions;
             });
         },
         methods: {
@@ -88,27 +90,6 @@
         width: 90%;
         margin-left: 5%;
         margin-top: 5vh;
-    }
-
-    .action-btns {
-        background-color: #9fa8da;
-        width: 30%;
-        margin-left: 70%;
-        padding: 2px;
-        display: flex;
-        justify-content: space-around;
-    }
-
-    .action-btns > div {
-        color: black;
-        cursor: pointer;
-        width: 30%;
-        height: 30px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 5px;
-        background-color: #9098c6;
     }
 
     .answerForm {

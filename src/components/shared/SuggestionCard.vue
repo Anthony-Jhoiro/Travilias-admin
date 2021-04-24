@@ -1,6 +1,7 @@
 <template>
   <Card>
     <template #header>
+      <div class="subHeader">
         <div class="action-btns">
             <div>
                 <font-awesome-icon icon="language" />
@@ -9,13 +10,16 @@
                 <font-awesome-icon icon="reply" @click="answer(suggestion)"/>
             </div>
         </div>
+      </div>
     </template>
     <template #content>
         <p>{{suggestion.message}}</p>
     </template>
     <template #footer>
-        <p>le {{suggestion.date}}</p>
+      <div id="footerPerso">
         <p>par <Tag :value="suggestion.user.username"></Tag></p>
+        <p>le {{ suggestionDate }}</p>
+      </div>
     </template>
   </Card>
 </template>
@@ -43,7 +47,18 @@
       },
     },
     computed: {
+      suggestionDate() {
+        const mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+        if(this.suggestion){
+          const date:Date = new Date(this.suggestion.date);
+          let day:string = ("" + date.getDate()).length > 1 ? "" + date.getDate() : "0" + date.getDate();
+          let month:string = mois[date.getMonth()];
+          let year:string = "" + date.getFullYear();
 
+
+          return day + " " + month + " " + year;
+        }
+      }
     },
     watch: {
 
@@ -52,4 +67,33 @@
 </script>
 
 <style>
+  #footerPerso {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .subHeader {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .action-btns {
+      width: 20%;
+      padding-top: 4px;
+      display: flex;
+      justify-content: space-around;
+  }
+
+  .action-btns > div {
+      color: black;
+      cursor: pointer;
+      width: 30%;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50px;
+      background-color: #CCC;
+  }
 </style>

@@ -136,3 +136,28 @@ export interface Suggestion {
   user: User;
   date: string;
 }
+
+//* ----------------- format types from back ---------------------------------
+
+export function formatSuggestion(suggestion:any):Suggestion {
+  let sugg = {
+      id: suggestion._id,
+      message: suggestion._message,
+      author_id: suggestion._author_id,
+      date: suggestion._date,
+      user: formatUser(suggestion._user),
+  }
+  return sugg;
+}
+
+export function formatUser (user:any):User {
+  let usr = {
+      id: user._id,
+      username: user._username,
+      displayedName: user._displayedName,
+      email: user._email,
+      created_at: user._created_at,
+      profile_picture: user._profile_picture,
+  }
+  return usr;
+}

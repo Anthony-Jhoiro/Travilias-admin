@@ -23,6 +23,7 @@
   import { defineComponent, PropType } from 'vue'
   import SuggestionsController from '../../controllers/suggestions.controller';
   import { Suggestion } from '/@/types';
+  import { useToast } from "primevue/usetoast";
   export default defineComponent({
     name: 'SuggestionAnswerModale',
     components: {
@@ -54,13 +55,14 @@
       
     },
     methods: {
-      answerTo() {        
+      answerTo() {       
+        const toast = useToast(); 
           SuggestionsController.answer(this.answer).then((res) => {
               if(res.success){
-                  this.$toast.add({severity:'success', summary: res.message, detail:res.detail, life: 1500});
+                toast.add({severity:'success', summary: res.message, detail:res.detail, life: 1500});
               }
               else {
-                  this.$toast.add({severity:'error', summary: res.message, detail:res.detail, life: 3000});
+                toast.add({severity:'error', summary: res.message, detail:res.detail, life: 3000});
               }
 
               this.$emit('answered');
