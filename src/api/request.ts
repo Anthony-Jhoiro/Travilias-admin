@@ -26,7 +26,7 @@ export async function makeRequest<ResponseSchema = any>(
     { status: "ko"; message: string } | { status: "ok"; data: ResponseSchema }
   >({
     method: method,
-    url: "http://127.0.0.1:8080/api/v0" + url, // TODO : API endpoint in environment
+    url: import.meta.env.BASE_URL + url,
     data: body,
     headers,
   });
