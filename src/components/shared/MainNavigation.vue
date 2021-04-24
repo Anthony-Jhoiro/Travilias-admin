@@ -1,6 +1,7 @@
 <template>
   <div class="sidebar" v-bind:class="[open ? 'sidebar-open' : 'sidebar-close']">
-    <h1 class="sidebar-title">Travilias - Admin</h1>
+    <h1 class="sidebar-title sidebar-header">Travilias - Admin</h1>
+    <h2 class="sidebar-displayed-name sidebar-header">{{ displayedName }}</h2>
     <!-- Start Toggle button -->
     <button class="sidebar_toggle_btn" @click="toggleOpening">
       <i class="fas" v-bind:class="[open ? 'fa-times' : 'fa-bars']" />
@@ -23,6 +24,8 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { useStore } from "vuex";
+import { AuthenticationStoreOptions } from "/@/stores/authenticationStore";
 
 export default defineComponent({
   name: "MainNavigation",
@@ -72,6 +75,14 @@ export default defineComponent({
       this.open = !this.open;
     },
   },
+  computed: {
+    displayedName() {
+      const store = useStore<AuthenticationStoreOptions>();
+      const profile = store.getters.profile;
+
+      return profile ? `${profile.firstName} ${profile.lastName}` : "";
+    },
+  },
 });
 </script>
 
@@ -89,22 +100,28 @@ export default defineComponent({
 
 .sidebar-close {
   width: 60px;
-  padding-top: 3.5em;
+  padding-top: 5.3rem;
 }
-
-.sidebar-open .sidebar-title {
+.sidebar-open .sidebar-header {
   overflow: hidden;
   white-space: nowrap;
   color: #fff;
   width: 250px;
   text-align: center;
   margin: 0;
-  padding-top: 1em;
-  padding-bottom: 1em;
-  font-size: 1.5em;
 }
 
-.sidebar-close .sidebar-title {
+.sidebar-open .sidebar-title {
+  font-size: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.sidebar-open .sidebar-displayed-name {
+  font-size: 1.3rem;
+  padding-bottom: 0.5rem;
+}
+
+.sidebar-close .sidebar-header {
   display: none;
 }
 
