@@ -1,6 +1,8 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faCheck,
+  faChevronLeft,
+  faChevronRight,
   faLanguage,
   faReply,
   faThumbtack
@@ -19,16 +21,20 @@ import Tag from "primevue/tag";
 import Textarea from "primevue/textarea";
 import Toast from "primevue/toast";
 import ToastService from "primevue/toastservice";
+import Carousel from "primevue/carousel";
 import { createApp } from "vue";
 import App from "./App.vue";
 import { KeycloakProvider } from "./keycloak-provider";
 import router from "./router";
 import { store } from "./stores";
 
+// Add icons
 library.add(faLanguage);
 library.add(faReply);
 library.add(faThumbtack);
 library.add(faCheck);
+library.add(faChevronLeft);
+library.add(faChevronRight);
 
 KeycloakProvider((keycloak) => {
   createApp(App)

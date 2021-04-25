@@ -1,9 +1,7 @@
 
 namespace PostsController {
-    export function getPosts(): Promise<any[]> {
-        return Promise.resolve([
-
-        ]);
+    export function getPosts(limit: number, offset: number) {
+        
     }
 }
 
