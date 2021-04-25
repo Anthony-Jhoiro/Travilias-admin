@@ -5,24 +5,24 @@ export interface AuthenticationStoreOptions {
   keycloak: Keycloak.KeycloakInstance | null
 }
 
-export const authenticationStore = createStore<AuthenticationStoreOptions>({
-  state: {
+export const authenticationStore = {
+  state: () => ({
     keycloak: null
-  },
+  }),
   mutations: {
-    setKeycloakInstance(state, keycloak: Keycloak.KeycloakInstance) {
+    setKeycloakInstance(state: any, keycloak: Keycloak.KeycloakInstance) {
       state.keycloak = keycloak;
     },
   },
 
   getters: {
-    profile(state) {
-      return state.keycloak?.profile;
+    profile(state: any) {
+      return state.keycloak?.profile || {};
     },
 
-    authenticationToken(state) {
+    authenticationToken(state: any) {
       console.log(state.keycloak?.token, state.keycloak);
       return state.keycloak?.token;
     }
   }
-});
+};
