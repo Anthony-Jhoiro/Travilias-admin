@@ -20,12 +20,10 @@ import Textarea from "primevue/textarea";
 import Toast from "primevue/toast";
 import ToastService from "primevue/toastservice";
 import { createApp } from "vue";
-// TypeScript error? Run VSCode command
-// TypeScript: Select TypeScript version - > Use Workspace Version
 import App from "./App.vue";
 import { KeycloakProvider } from "./keycloak-provider";
 import router from "./router";
-import { authenticationStore } from "./stores/authenticationStore";
+import { store } from "./stores";
 
 library.add(faLanguage);
 library.add(faReply);
@@ -57,7 +55,7 @@ KeycloakProvider((keycloak) => {
     .provide('keycloak', keycloak)
 
     // Add stores
-    .use(authenticationStore)
+    .use(store)
     
     .mount("#app");
 });

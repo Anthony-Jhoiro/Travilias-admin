@@ -1,8 +1,8 @@
-import { Store } from "vuex";
+import { createStore } from "vuex";
 import { authenticationStore } from "./authenticationStore";
 
-export const store = new Store({
+export const store = createStore({
   modules: {
     auth: authenticationStore
   }
-})
+});
