@@ -40,6 +40,17 @@ namespace SuggestionsController {
             }, date: "11-02-2021 19:56:38"},
         ]);
     }
+
+    export function pinSuggestion(suggestion:Suggestion){
+        console.log("appel api...");
+        return Promise.resolve({success: true, message: "la suggestion a été pin", detail: ""});
+        
+    }
+
+    export function answer(answer:any) {
+        console.log("appel api...");
+        return Promise.resolve({success: true, message: "la réponse a bien été envoyée", detail: ""});
+    }
 }
 
 export default SuggestionsController;

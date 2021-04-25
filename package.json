@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vuedx-typecheck . && vite build",
+    "build": "vite build",
     "serve": "vite preview"
   },
   "dependencies": {
@@ -11,10 +11,15 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
     "@fortawesome/vue-fontawesome": "^3.0.0-3",
+    "@types/axios": "^0.14.0",
+    "axios": "^0.21.1",
     "express": "^4.17.1",
-    "primevue": "^3.2.1",
+    "keycloak-js": "^12.0.4",
+    "mitt": "^2.1.0",
+    "primevue": "^3.2.4",
     "vue": "^3.0.5",
-    "vue-router": "^4.0.0"
+    "vue-router": "^4.0.0",
+    "vuex": "^4.0.0"
   },
   "devDependencies": {
     "@types/node": "^14.14.25",

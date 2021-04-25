@@ -1,7 +1,8 @@
-import { createWebHistory, createRouter, RouteRecordRaw } from "vue-router";
-import { DefaultComponent } from "../components/shared";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { ImagesPage } from "../components/pages/images";
 import SuggestionsPage from "../components/pages/suggestions";
 import BanListPage from "../components/pages/banlist";
+import { DefaultComponent } from "../components/shared";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -30,7 +31,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: "/images",
-    component: DefaultComponent,
+    component: ImagesPage,
   },
 ];
 

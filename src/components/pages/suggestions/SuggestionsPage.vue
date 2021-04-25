@@ -1,15 +1,50 @@
 <template>
     <div>
-        <h1>Suggestion page</h1>
-        <div v-if="suggestions && users" class="container">
-            <div class="sugg" v-for="suggestion of suggestions" v-bind:key="suggestion.id">
-                <p> {{ suggestion.message }} </p>
-                <div class="subInfos">
-                    <p>par {{ suggestion.user.username }} </p>
-                    <p>le {{ suggestion.date }} </p>
+        <div class="container"> <!-- TODO : Split in multiple components-->
+            <Card v-for="(suggestion, index) of suggestions" v-bind:key="index">
+                <template #header>
+                    <div class="action-btns">
+                        <div>
+                            <font-awesome-icon icon="language" />
+                        </div>
+                        <div>
+                            <font-awesome-icon icon="reply" @click="displayAnswer = true; answer.suggestion = suggestion"/>
+                        </div>
+                        <div @click="toPin(suggestion)">
+                            <font-awesome-icon icon="thumbtack" />
+                        </div>
+                    </div>
+                </template>
+                <template #content>
+                    <p>{{suggestion.message}}</p>
+                </template>
+                <template #footer>
+                    <p>le {{suggestion.date}}</p>
+                    <p>par <Tag :value="suggestion.user.username"></Tag></p>
+                </template>
+            </Card>
+        </div>
+
+        <Toast position="top-left"/>
+
+        <Dialog header="Répondre" v-model:visible="displayAnswer" :style="{width: '25vw'}" :modal="true">
+            <h5>à <Tag :value="answer.suggestion.user.username"></Tag></h5>
+            <div class="answerForm">
+                <div>
+                    <label for="titreReponse">Titre :</label>
+                    <InputText id="titreReponse" type="text" v-model="answer.title"/>
+                </div>
+                <div>
+                    <label>message :</label>
+                    <Textarea cols="30" rows="10" v-model="answer.message"/>
                 </div>
             </div>
-        </div>
+            <template #footer>
+                <Button label="Annuler" class="p-button-danger"  @click="displayAnswer = false"/>
+                <Button label="Répondre"  @click="answerTo"/>
+            </template>
+        </Dialog>
+
     </div>
 </template>
 
@@ -19,7 +54,12 @@
     // api
     import SuggestionsController from "../../../controllers/suggestions.controller";
     import UsersController from "../../../controllers/users.controller";
-    import { Id, Suggestion, User } from '../../../types';
+    import { Suggestion, User } from '../../../types';
+
+    import { useToast } from "primevue/usetoast";
+
+    // icons
+
 
     export default defineComponent({
         name: 'SuggestionsPage',
@@ -30,10 +70,18 @@
              return {
                  suggestions: Array<Suggestion>(),
                  users: Array<User>(),
-                 color: "00ffff"
+                 color: "00ffff",
+
+                 displayAnswer: false,
+                 
+                 answer: {
+                     suggestion: null,
+                     title: "",
+                     message: ""
+                 }
             }
         },
-        beforeMount() {
+        beforeMount() { // TODO : should we use setup() instead ?
             SuggestionsController.getSuggestions().then((res) => {
                 this.suggestions = res;
             });
@@ -42,6 +90,28 @@
             });
         },
         methods: {
+            toPin(suggestion:Suggestion){
+                SuggestionsController.pinSuggestion(suggestion).then((res) => {
+                    if(res.success){
+                        this.$toast.add({severity:'success', summary: res.message, detail:res.detail, life: 1200});
+                    }
+                    else {
+                        this.$toast.add({severity:'error', summary: res.message, detail:res.detail, life: 3000});
+                    }
+                });
+            },
+
+            answerTo() {
+                SuggestionsController.answer(this.answer).then((res) => {
+                    if(res.success){
+                        this.$toast.add({severity:'success', summary: res.message, detail:res.detail, life: 1500});
+                    }
+                    else {
+                        this.$toast.add({severity:'error', summary: res.message, detail:res.detail, life: 3000});
+                    }
+                });
+                this.displayAnswer = false;
+            }
         },
         props: {
 
@@ -55,7 +125,6 @@
 </script>
 
 <style>
-
     .container {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -63,24 +132,48 @@
         grid-auto-rows: minmax(100px, auto);
         width: 90%;
         margin-left: 5%;
+        margin-top: 5vh;
     }
 
-    .sugg {
-        border: 1px solid black;
-        border-radius: 10px;
-        box-shadow: 0 0 4px black;
-        background-color: #EEE;
-        padding: 10px;
-        padding-bottom: 0;
-    }
-
-    .subInfos {
+    .action-btns {
+        background-color: #9fa8da;
+        width: 30%;
+        margin-left: 70%;
+        padding: 2px;
         display: flex;
-        justify-content: space-between;
-        border-top: 1px solid #222;
+        justify-content: space-around;
     }
 
-    .subInfos p {
-        color: #555;
+    .action-btns > div {
+        color: black;
+        cursor: pointer;
+        width: 30%;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        background-color: #9098c6;
+    }
+
+    .answerForm {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+    }
+
+    .answerForm input {
+        width: 100%;
+    }
+
+    .answerForm > div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: baseline;
+        width: 100%;
+        margin: 10px 0 10px 0;
     }
 </style>
