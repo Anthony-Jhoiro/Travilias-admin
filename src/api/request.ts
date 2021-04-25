@@ -26,7 +26,7 @@ export async function makeRequest<ResponseSchema = any>(
     { status: "ko"; message: string } | { status: "ok"; data: ResponseSchema }
   >({
     method: method,
-    url: import.meta.env.BASE_URL + url,
+    url: import.meta.env.VITE_API_ENDPOINT + url,
     data: body,
     headers,
   });
