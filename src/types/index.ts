@@ -1,5 +1,29 @@
 export type Id = string;
 
+export enum ControlType {
+  VALID = "VALID",
+  ILLEGAL_CONTENT = "ILLEGAL_CONTENT",
+  RESTRICTED = "RESTRICTED",
+  VIOLENCE = "VIOLENCE",
+  DISCRIMINATION ="DISCRIMINATION",
+  COPYRIGHT = "COPYRIGHT"
+}
+
+export const CONTROLS: {[key: string]: ControlType[]} = {
+  "ok": [
+    ControlType.VALID
+  ],
+  "warning": [
+    ControlType.COPYRIGHT,
+    ControlType.RESTRICTED
+  ],
+  "danger": [
+    ControlType.VIOLENCE,
+    ControlType.ILLEGAL_CONTENT,
+    ControlType.DISCRIMINATION
+  ]
+}
+
 /**
  * # User
  * - `id` - Identifier
@@ -32,6 +56,7 @@ export enum ImageType {
 
 /**
  * # Imlage
+ * - `id` - Image id
  * - `url` - Image basename
  * - `owner` - The uploader
  * - `categorie` - Categorie of the image (see ImageType)
@@ -39,8 +64,12 @@ export enum ImageType {
  * - `claims` - list of Claim
  * - `created_at` - Datetime when the image has been added
  * - `pined` - true if the image has been pined
+ * - `controlType` - Control type of the image (can be null)
+ * - `controlledAt` - Date of the latest control (can be null)
  */
 export interface Image {
+  id: Id;
+  createdAt: Date;
   url: string;
   owner: User;
   categorie: ImageType;
@@ -48,6 +77,8 @@ export interface Image {
   claims: Claim[];
   created_at: Date;
   pined: boolean;
+  controlType: ControlType;
+  controlledAt: Date | null;
 }
 
 /**
