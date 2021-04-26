@@ -4,9 +4,6 @@
       <div class="subHeader">
         <div class="action-btns">
             <div>
-                <font-awesome-icon icon="language" />
-            </div>
-            <div>
                 <font-awesome-icon icon="reply" @click="answer(suggestion)"/>
             </div>
         </div>
@@ -26,7 +23,7 @@
 
 <script lang="ts">
   import { defineComponent } from 'vue'
-  import {Suggestion} from "../../types";
+  import {Suggestion} from "../../../../types";
   export default defineComponent({
     name: 'SuggestionCard',
     components: {

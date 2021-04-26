@@ -21,7 +21,7 @@
 
 <script lang="ts">
   import { defineComponent, PropType } from 'vue'
-  import SuggestionsController from '../../controllers/suggestions.controller';
+  import SuggestionsController from '../../../../controllers/suggestions.controller';
   import { Suggestion } from '/@/types';
   import { useToast } from "primevue/usetoast";
   export default defineComponent({
