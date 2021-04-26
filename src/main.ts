@@ -26,6 +26,7 @@ import App from "./App.vue";
 import { KeycloakProvider } from "./keycloak-provider";
 import router from "./router";
 import { authenticationStore } from "./stores/authenticationStore";
+import 'primeflex/primeflex.css';
 
 library.add(faLanguage);
 library.add(faReply);
