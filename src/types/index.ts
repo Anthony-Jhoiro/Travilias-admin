@@ -110,11 +110,12 @@ export interface Posts {
   title: string;
   content: string;
   images: Image[];
-  created_at: Date;
+  createdAt: Date;
   pined: boolean;
   location: LngLatLocation;
   author: User;
   claims: Claim[];
+  controlledAt: Date;
 }
 
 /**
