@@ -1,5 +1,5 @@
 <template>
-  <div class="author-line">
+  <div class="author-line" v-if="user">
     <div class="author-profile-picture">
       <img
         :src="user.profile_picture"
