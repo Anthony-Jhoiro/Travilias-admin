@@ -60,15 +60,11 @@
         },
         mounted() {
             SuggestionsController.getSuggestions(this.page, this.nbSuggestion).then((res:any) => {
-                console.log(res);
-                
                 let suggestions = [];
                 for(let datum of res){
                     suggestions.push(formatSuggestion(datum));
-                    console.log(datum);
                 }
                 this.suggestions = suggestions;
-                console.log(suggestions);
             });
         },
         methods: {
