@@ -3,6 +3,7 @@
     <MainNavigation />
   </aside>
   <main>
+    <Toast position="top-left"/>
     <router-view></router-view>
   </main>
 </template>

@@ -21,6 +21,8 @@ export async function makeRequest<ResponseSchema = any>(
 ): Promise<ResponseSchema> {
   const headers: any = {};
   
+  
+  
 
   const response = await axios.request<
     { status: "ko"; message: string } | { status: "ok"; data: ResponseSchema }
