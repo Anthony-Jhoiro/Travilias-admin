@@ -3,7 +3,10 @@
     <template #header>
       <div class="subHeader">
         <div class="action-btns">
-            <div>
+            <div v-if="suggestion && suggestion.answer && suggestion.answer.suggestion_id" class="alreadyAnswered toAnswer">
+                <font-awesome-icon v-if="suggestion && suggestion.answer" icon="reply" @click="answer(suggestion)"/>
+            </div>
+            <div v-else class="notalreadyAnswered toAnswer">
                 <font-awesome-icon icon="reply" @click="answer(suggestion)"/>
             </div>
         </div>
@@ -47,7 +50,8 @@
       suggestionDate() {
         const mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
         if(this.suggestion){
-          const date:Date = new Date(this.suggestion.date);
+          
+          const date:Date = new Date(this.suggestion.createdAt);
           let day:string = ("" + date.getDate()).length > 1 ? "" + date.getDate() : "0" + date.getDate();
           let month:string = mois[date.getMonth()];
           let year:string = "" + date.getFullYear();
@@ -76,21 +80,29 @@
   }
 
   .action-btns {
-      width: 20%;
-      padding-top: 4px;
-      display: flex;
-      justify-content: space-around;
+    width: 10%;
+    padding-top: 4px;
+    display: flex;
+    justify-content: space-around;
   }
 
-  .action-btns > div {
-      color: black;
-      cursor: pointer;
-      width: 30%;
-      height: 30px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 50px;
-      background-color: #CCC;
+  .toAnswer {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+  }
+
+  .alreadyAnswered {
+    background-color: forestgreen;
+    color: white;
+  }
+
+  .notalreadyAnswered {
+    background-color: #CCC;
+    color: black;
   }
 </style>

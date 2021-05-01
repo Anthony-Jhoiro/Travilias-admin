@@ -21,12 +21,14 @@ export async function makeRequest<ResponseSchema = any>(
 ): Promise<ResponseSchema> {
   const headers: any = {};
   
+  
+  
 
   const response = await axios.request<
     { status: "ko"; message: string } | { status: "ok"; data: ResponseSchema }
   >({
     method: method,
-    url: import.meta.env.BASE_URL + url,
+    url: import.meta.env.VITE_API_ENDPOINT + url,
     data: body,
     headers,
   });

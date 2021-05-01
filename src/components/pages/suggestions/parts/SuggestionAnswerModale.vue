@@ -1,28 +1,30 @@
 <template>
-  <Dialog header="Répondre" v-model:visible="displayAnswer" :modal="true">
-    <h5 v-if="suggestion && suggestion.user">à <Tag :value="suggestion.user.username ?? 'user name non chargé'"></Tag></h5>
-    <h5 v-else><Tag :value="'username non chargé'"></Tag></h5>
+  <Dialog :header="header" v-model:visible="displayAnswer" modal="true">
+    <h5>à <Tag :value="suggestion.user?.username ?? 'Username non chargé'"></Tag></h5>
     <div class="answerForm">
         <div>
             <label for="titreReponse">Titre :</label>
-            <InputText id="titreReponse" type="text" v-model="answer.title"/>
+            <InputText id="titreReponse" type="text" v-model="suggestion.answer.title" :disabled="disabled" />
         </div>
         <div>
-            <label>message :</label>
-            <Textarea cols="30" rows="10" v-model="answer.message"/>
+            <label>Message :</label>
+            <Textarea cols="30" rows="10" v-model="suggestion.answer.message" :disabled="disabled"/>
         </div>
     </div>
-    <template #footer>
-        <Button label="Annuler" class="p-button-danger" @click="this.$emit('answered')"/>
-        <Button label="Répondre"  @click="answerTo"/>
+    <template v-if="disabled" #footer>
+        <Button label="Ok" class="p-button-primary" @click="this.$emit('answered')"/>
+    </template>
+    <template v-else #footer>
+        <Button label="Annuler" class="p-button-danger" @click="this.cancel"/>
+        <Button label="Répondre" class="p-button-primary" @click="this.answerTo"/>
     </template>
   </Dialog>
 </template>
 
 <script lang="ts">
   import { defineComponent, PropType } from 'vue'
-  import SuggestionsController from '../../../../controllers/suggestions.controller';
-  import { Suggestion } from '/@/types';
+  import SuggestionsController from '../../../../api/suggestions';
+  import { Answer, Suggestion } from '/@/types';
   import { useToast } from "primevue/usetoast";
   export default defineComponent({
     name: 'SuggestionAnswerModale',
@@ -31,43 +33,34 @@
     },
     data() {
       return {
-        answer: {
-            suggestion: {
-              id: "",
-              message: "",
-              user: {
-                id: "",
-                displayedName: "pas de nom chargé",
-                username: "pas de nom chargé",
-                email: "pas de nom chargé",
-              },
-              date: ""
-            } as Suggestion | undefined,
-            title: "",
-            message: ""
-        },
+        header: "",
+        disabled: false,
       }
-    },
-    beforeMount() {
-      if(this.suggestion){
-        this.answer.suggestion = this.suggestion;
-      }
-      
     },
     methods: {
       answerTo() {       
-        const toast = useToast(); 
-          SuggestionsController.answer(this.answer).then((res) => {
-              if(res.success){
-                toast.add({severity:'success', summary: res.message, detail:res.detail, life: 1500});
+        // const toast = useToast();
+        if(this.suggestion && this.suggestion.answer){
+          this.suggestion.answer.suggestion_id = this.suggestion.id;
+          SuggestionsController.answer(this.suggestion.answer).then((ans:Answer) => {
+              /* if(ans){
+                toast.add({severity:'success', summary: ans.message, life: 3000});
               }
               else {
-                toast.add({severity:'error', summary: res.message, detail:res.detail, life: 3000});
-              }
-
-              this.$emit('answered');
+                toast.add({severity:'error', summary: "envoi avorté", life: 3000});
+              } */
+              //@ts-ignore
+              this.$emit('answered', this.suggestion.answer);
           });
+        }
       },
+      cancel() {
+        if(this.suggestion?.answer){
+          this.suggestion.answer = null;
+        }
+        this.$emit('answered');
+
+      }
     },
     props: {
         displayAnswer: Boolean,
@@ -79,7 +72,21 @@
 
     },
     watch: {
-
+      displayAnswer(newValue) {
+        if(newValue){
+          if(this.suggestion){
+            this.header = this.suggestion.answer ? "Réponse déjà donnée" : "Répondre";
+            this.disabled = this.suggestion.answer ? true : false;
+            if(!this.suggestion.answer){
+              this.suggestion.answer = {
+                suggestion_id: "",
+                title: "",
+                message: "",
+              };
+            }
+          }
+        }
+      }
     },
   })
 </script>

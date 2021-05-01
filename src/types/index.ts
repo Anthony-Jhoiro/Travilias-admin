@@ -155,6 +155,13 @@ export interface BanWord {
   word: string;
 }
 
+export interface Answer {
+  id?:string;
+  title:string;
+  message:string;
+  suggestion_id:string;
+}
+
 /**
  * # Suggestion
  * - `id` - identifier
@@ -165,7 +172,9 @@ export interface Suggestion {
   id: Id;
   message: string;
   user: User;
-  date: string;
+  createdAt: string;
+  author_id?: string;
+  answer:Answer | null;
 }
 
 //* ----------------- format types from back ---------------------------------
@@ -174,10 +183,12 @@ export function formatSuggestion(suggestion:any):Suggestion {
   let sugg = {
       id: suggestion._id,
       message: suggestion._message,
-      author_id: suggestion._author_id,
-      date: suggestion._date,
+      author_id: suggestion._authorId,
+      createdAt: suggestion._createdAt,
       user: formatUser(suggestion._user),
+      answer: formatAnswer(suggestion._answer),
   }
+  
   return sugg;
 }
 
@@ -187,8 +198,21 @@ export function formatUser (user:any):User {
       username: user._username,
       displayedName: user._displayedName,
       email: user._email,
-      created_at: user._created_at,
+      created_at: user._createdAt,
       profile_picture: user._profile_picture,
   }
   return usr;
+}
+
+export function formatAnswer(answer:any):Answer | null {
+  if(!answer){
+    return null;
+  }
+  let ans = {
+    id: answer._id,
+    title:answer._title,
+    message:answer._message,
+    suggestion_id:answer._suggestion_id,
+  }
+  return ans;
 }
