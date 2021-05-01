@@ -1,6 +1,8 @@
 <template>
-  <div class="banwContainer">
-
+  <div class="scrollContainer">
+    <div class="banwContainer" v-if="banList">
+      <ban-word-component v-for="banword in banList" :banword="banword" :key="banword.id" @removed="majBanList"/>
+    </div>
   </div>
   <div class="addWordDiv">
     <InputText type="text" v-model="newWord" class="inputtext"/>
@@ -9,28 +11,54 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue';
-  import { getBanWords } from '../../../api/banlist';
+  import { computed, defineComponent, ref } from 'vue';
+  import { getBanWords, postBanWord } from '../../../api/banlist';
+  import { BanWord, formatBanWord } from '../../../types';
+  import { useStore } from "vuex";
+  import BanWordComponent from './parts/BanWordComponent.vue';
   export default defineComponent({
     name: 'BanListPage',
     components: {
-
+      BanWordComponent
     },
     data() {
-       return {
-         banList: {
-           type: Array,
-         },
+      return {
          newWord: "",
       }
     },
-    mounted() {
-      getBanWords().then(data => {
-        console.log(data);        
-      })
+    setup() {
+      const store = useStore();
+
+      getBanWords().then((data:BanWord[]) => {
+        store.commit('setBanList', data.map(formatBanWord));
+      });
+      
+
+      return {
+        banList: computed(() => store.getters.getBanList),
+        addbanList: (banword:BanWord) => {store.commit('addBanList', banword)},
+        setBanList: (banword:BanWord) => {store.commit('setBanList', banword)},
+      }
     },
     methods: {
-
+      register(){
+        if(this.newWord){
+          const newBanWord = {
+            id: "",
+            word: this.newWord,
+            language: "fr-Fr",
+          };
+          postBanWord(newBanWord).then((data) => {
+            this.addbanList(formatBanWord(data.banWord));
+          });
+        }
+        else {
+          console.info("un mot vide ne peut être enregistré");
+        }
+      },
+      majBanList(dataList:any){
+        this.setBanList(dataList.map(formatBanWord));
+      }
     },
     props: {
 
@@ -46,8 +74,13 @@
 
 <style>
 
-.banwContainer {
+.scrollContainer {
   height: 90vh;
+}
+
+.banwContainer {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .addWordDiv {
@@ -62,6 +95,8 @@
   width: 100%;
 
   border-top: 2px solid #333;
+
+
 }
 
 .inputtext {

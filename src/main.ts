@@ -3,7 +3,8 @@ import {
   faCheck,
   faLanguage,
   faReply,
-  faThumbtack
+  faThumbtack,
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import Button from "primevue/button";
@@ -28,7 +29,6 @@ import "primevue/resources/primevue.min.css";
 //@ts-ignore
 import ToastService from 'primevue/toastservice';
 import { KeycloakProvider } from "./keycloak-provider";
-import { authenticationStore } from "./stores/authenticationStore";
 import 'primeflex/primeflex.css';
 import { store } from "./stores";
 
@@ -36,6 +36,7 @@ library.add(faLanguage);
 library.add(faReply);
 library.add(faThumbtack);
 library.add(faCheck);
+library.add(faTimes);
 
 KeycloakProvider((keycloak) => {
   createApp(App)
