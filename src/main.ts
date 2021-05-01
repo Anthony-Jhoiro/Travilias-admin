@@ -29,6 +29,7 @@ import "primevue/resources/primevue.min.css";
 import ToastService from 'primevue/toastservice';
 import { KeycloakProvider } from "./keycloak-provider";
 import { authenticationStore } from "./stores/authenticationStore";
+import { store } from "./stores";
 
 library.add(faLanguage);
 library.add(faReply);
@@ -60,7 +61,7 @@ KeycloakProvider((keycloak) => {
     .provide('keycloak', keycloak)
 
     // Add stores
-    .use(authenticationStore)
+    .use(store)
     
     .mount("#app");
 });

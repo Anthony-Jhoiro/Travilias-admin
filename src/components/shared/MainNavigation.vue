@@ -25,7 +25,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { useStore } from "vuex";
-import { AuthenticationStoreOptions } from "/@/stores/authenticationStore";
 
 export default defineComponent({
   name: "MainNavigation",
@@ -77,7 +76,7 @@ export default defineComponent({
   },
   computed: {
     displayedName() {
-      const store = useStore<AuthenticationStoreOptions>();
+      const store = useStore();
       const profile = store.getters.profile;
 
       return profile ? `${profile.firstName} ${profile.lastName}` : "";
