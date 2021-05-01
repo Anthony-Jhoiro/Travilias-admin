@@ -18,11 +18,17 @@ import "primevue/resources/themes/md-dark-indigo/theme.css";
 import Tag from "primevue/tag";
 import Textarea from "primevue/textarea";
 import Toast from "primevue/toast";
-import ToastService from "primevue/toastservice";
 import { createApp } from "vue";
-import App from "./App.vue";
+// TypeScript error? Run VSCode command
+// TypeScript: Select TypeScript version - > Use Workspace Version
+import App from './App.vue'
+import router from './router'
+import 'primevue/resources/themes/md-dark-indigo/theme.css';
+import "primevue/resources/primevue.min.css";
+//@ts-ignore
+import ToastService from 'primevue/toastservice';
 import { KeycloakProvider } from "./keycloak-provider";
-import router from "./router";
+import { authenticationStore } from "./stores/authenticationStore";
 import { store } from "./stores";
 
 library.add(faLanguage);
