@@ -1,5 +1,6 @@
 import { ControlType, Id, Image } from "../types";
 import { HTTPMethods, makeRequest } from "./request";
+import { store } from "../stores";
 
 /**
  * Fetch the API to get images list
@@ -8,19 +9,27 @@ import { HTTPMethods, makeRequest } from "./request";
  * @param after date after wich we start fetching results
  * @returns the fetched image list
  */
-export async function getImages(limit: number, page: number, after?: Date): Promise<Image[]> {
+export async function getImages(
+  limit: number,
+  page: number,
+  after?: Date
+): Promise<Image[]> {
   let query = "/image?";
   if (limit) query += `limit=${limit}&`;
-  if (page) query += `page=${after}&`;
-  if (after) query += `limit=${after.getTime()}&`;
+  if (page) query += `page=${page}&`;
+  if (after) query += `after=${after.getTime()}&`;
 
-  const images = await makeRequest<Image[]>(HTTPMethods.GET, query);
+  const responseImages = await makeRequest<Image[]>(HTTPMethods.GET, query);
 
-  return images.map((i) => ({
+  const filteredImages = responseImages.map((i) => ({
     ...i,
     controlledAt: i.controlledAt ? new Date(i.controlledAt) : null,
     createdAt: new Date(i.createdAt),
   }));
+
+  store.commit("addImages", filteredImages);
+
+  return filteredImages;
 }
 
 /**
@@ -29,14 +38,20 @@ export async function getImages(limit: number, page: number, after?: Date): Prom
  * @param controlType type of control
  * @returns the controlled image
  */
-export async function controlImage(imageId: Id, controlType: ControlType): Promise<Image> {
-  const { image } = await makeRequest<{image: Image}>(HTTPMethods.PUT, "/image/" + imageId, {
-    controlType,
-  });
+export async function controlImage(imageId: Id, controlType: ControlType) {
+  const { image } = await makeRequest<{ image: Image }>(
+    HTTPMethods.PUT,
+    "/image/" + imageId,
+    {
+      controlType,
+    }
+  );
 
-  return {
-    ...image,
-    controlledAt: image.controlledAt ? new Date(image.controlledAt) : null,
-    createdAt: new Date(image.createdAt),
-  };
+  if (image) {
+    store.commit("updateImage", {
+      ...image,
+      controlledAt: image.controlledAt ? new Date(image.controlledAt) : null,
+      createdAt: new Date(image.createdAt),
+    });
+  }
 }

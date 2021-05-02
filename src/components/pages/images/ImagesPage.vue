@@ -1,22 +1,24 @@
 <template>
-<div class="image-page">
-  <Galleria
-    :value="images"
-    :numVisible="7"
-    :circular="true"
-    v-model:activeIndex="activeIndex" 
-    style="min-width: 100%; height: 100vh"
-  >
-    <template #item="image">
-      <!-- <p>{{JSON.stringify(image.item)}}</p> -->
-      <image-panel :image="image.item"  @control="ct => onControl(image.item.id, ct)" />
-    </template>
-    <template #thumbnail="image">
-      <div class="thumbnail">
-        <img :src="image.item.url" :alt="image.item.url"/>
-      </div>
-    </template>
-  </Galleria>
+  <div class="image-page">
+    <Galleria
+      :responsiveOptions="responsiveOptions"
+      :value="images"
+      v-model:activeIndex="activeIndex"
+      style="min-width: 100%; height: 100vh"
+    >
+      <template #item="image">
+        <!-- <p>{{JSON.stringify(image.item)}}</p> -->
+        <image-panel
+          :image="image.item"
+          @control="(ct) => onControl(image.item.id, ct)"
+        />
+      </template>
+      <template #thumbnail="image">
+        <div class="thumbnail">
+          <img :src="image.item.url" :alt="image.item.url" />
+        </div>
+      </template>
+    </Galleria>
   </div>
 </template>
 
@@ -25,26 +27,24 @@ import { defineComponent, ref } from "vue";
 import { controlImage, getImages } from "../../../api/images";
 import { UserLine } from "../../shared/UserLine";
 import { CONTROLS, ControlType } from "../../../types";
-import ImagePanel from './ImagePanel.vue';
-// import { Image } from 'types';
+import ImagePanel from "./ImagePanel.vue";
+import { useStore } from "vuex";
+
+const LIMIT = 10;
 
 export default defineComponent({
   name: "ImagesList",
   components: {
     UserLine,
-    ImagePanel
+    ImagePanel,
   },
   setup() {
-    const images = ref<any[]>([]);
+    const searchDate = ref(new Date());
 
-    getImages(10, 0)
-      .then((_images) => {
-        images.value = _images;
-      })
-      .catch(); // TODO : handle errors
+    getImages(LIMIT, 0, searchDate.value);
 
     return {
-      images,
+      searchDate,
     };
   },
 
@@ -52,22 +52,38 @@ export default defineComponent({
     return {
       warningChips: CONTROLS.warning,
       dangerChips: CONTROLS.danger,
-      activeIndex: 0
+      activeIndex: 0,
+      page: 0,
     };
   },
   methods: {
     onControl(imageId: string, type: ControlType) {
-      controlImage(imageId, type) // TODO : use vuex
-      .then(image => {
-        const index = this.images.findIndex(i => i.id == image.id);
-        this.images = [...this.images.slice(0, index), image, ...this.images.slice(index+ 1)]
-      });
+      controlImage(imageId, type);
       this.next();
     },
     next() {
-      this.activeIndex = (this.activeIndex === this.images.length - 1) ? 0 : this.activeIndex + 1;
-    }
-  }
+      this.activeIndex =
+        this.activeIndex === this.images.length - 1 ? 0 : this.activeIndex + 1;
+    },
+    search() {
+      getImages(LIMIT, this.page, this.searchDate);
+    },
+  },
+  computed: {
+    images() {
+      const store = useStore();
+
+      return store.state.images.images;
+    },
+  },
+  watch: {
+    activeIndex(newActiveIndex) {
+      if (newActiveIndex > this.images.length - LIMIT / 2) {
+        this.page++;
+        this.search();
+      }
+    },
+  },
 });
 </script>
 
@@ -118,14 +134,14 @@ export default defineComponent({
   color: #fff;
   background-color: #b9bf69;
   border: none;
-  padding:  10px 20px;
+  padding: 10px 20px;
   margin-top: 10px;
   cursor: pointer;
 }
 
 .chip {
   background-color: #fff;
-  border : 3px solid;
+  border: 3px solid;
   padding: 5px 10px;
   border-radius: 50px;
   margin: 5px;
@@ -134,11 +150,11 @@ export default defineComponent({
 }
 
 .chip.warning {
-  border-color: #D9AA55;
+  border-color: #d9aa55;
 }
 
 .chip.danger {
-  border-color: #D94E41;
+  border-color: #d94e41;
 }
 
 .controllers {
@@ -149,12 +165,11 @@ export default defineComponent({
 .control-state {
   background-color: #ffffff22;
   padding: 20px;
-  margin:  20px 0;
+  margin: 20px 0;
 }
 
 .control-state p {
   color: #fff;
   margin: 0;
 }
-
 </style>
