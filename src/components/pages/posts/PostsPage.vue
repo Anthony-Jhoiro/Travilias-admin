@@ -1,31 +1,38 @@
 <template>
-  <Galleria
-    :value="posts"
-    :circular="true"
-    v-model:activeIndex="activeIndex"
-    style="min-width: 100%; height: 100vh"
-  >
-    <template #item="post">
-      <div class="post">
-        <post-panel :post="post.item" />
-        <div v-if="post.item.controlType" class="control-state">
-          <p>Controlled At : {{formatDate(post.item.controlledAt)}}</p>
-          <p>Controlled As : {{post.item.controlType}}</p>
-        </div>
-        <control-panel @control="(ctrl) => control(post.item.id, ctrl)" />
-      </div>
-    </template>
 
-    <template #thumbnail="post">
-      <div class="thumbnail">
-        <img
-          v-if="post.item.images && post.item.images.length > 0"
-          :src="post.item.images[0].url"
-          :alt="post.item.images[0].url"
-        />
+  <div class="post-page">
+    <div class="post-container" v-for="post in posts" :key="post.id">
+      <post-panel
+        :post="post"
+        @showReports="() => openSidebar(post)"
+        @onControlClick="() => (selectedToBeControlled = post)"
+        @onCheck="() => control(post.id, 'VALID')"
+      />
+    </div>
+
+    <Sidebar v-model:visible="sidebarOpen" position="right">
+      <h2>Signalements</h2>
+      <p v-if="activeReports.length === 0">Aucun signalement n'a été trouvé</p>
+      <div class="repports" v-else>
+        <div
+          class="repport-container"
+          v-for="(report, index) in activeReports"
+          :key="'report_' + index"
+        >
+          <repport :repport="report" />
+        </div>
       </div>
-    </template>
-  </Galleria>
+    </Sidebar>
+
+    <Dialog v-model:visible="selectedToBeControlled">
+      <template #header>
+        <h3>Controller le post</h3>
+      </template>
+      <div class="control-container">
+        <control-panel @control="(ctrl) => control(selectedToBeControlled.id, ctrl)" />
+      </div>
+    </Dialog>
+  </div>
 </template>
 
 <script lang="ts">
@@ -33,6 +40,7 @@ import { defineComponent } from "vue";
 import { useStore } from "vuex";
 import { controlPost, getPosts } from "../../../api/posts";
 import PostPanel from "./PostPanel.vue";
+import Repport from "./Repport.vue";
 import { ControlPanel } from "../../shared/ControlPanel";
 import { ControlType } from "../../../types";
 
@@ -40,6 +48,7 @@ export default defineComponent({
   name: "PostsPage",
   components: {
     PostPanel,
+    Repport,
     ControlPanel,
   },
   setup() {
@@ -55,56 +64,39 @@ export default defineComponent({
   methods: {
     control(postId: string, control: ControlType) {
       controlPost(postId, control);
+      this.selectedToBeControlled = null;
     },
-    formatDate(date: Date) {
-      const year = date.getFullYear();
-      const month = date.getMonth();
-      const day = date.getDay();
-      const hour = date.getHours();
-      const mins = date.getMinutes();
-
-      return `${year}-${month}-${day} ${hour}:${mins}`
+    openSidebar(post: any) {
+      this.activeReports = post.reports;
+      this.sidebarOpen = true;
     },
   },
   data() {
     return {
-      activeIndex: 0
-    }
+      activeIndex: 0,
+      sidebarOpen: false,
+      activeReports: [],
+      selectedToBeControlled: null,
+    };
   },
-  next() {
-      this.activeIndex = (this.activeIndex === this.posts.length - 1) ? 0 : this.activeIndex + 1;
-    }
 });
 </script>
 
 <style>
-.thumbnail {
-  display: block;
-  aspect-ratio: 1;
-  overflow: hidden;
-  height: 50px;
-  width: 50px;
-  margin: 0 2px;
-  background-color: #ddd;
+.post-page {
+  width: 100%;
 }
 
-.thumbnail img {
+.post-container {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.post {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  align-items: center;
-  height: calc(100vh - 82px);
   padding: 20px;
 }
 
-.control-state {
-  background-color: #333;
-  padding: 10px 20px;
+.repport-container {
+  margin: 10px 0;
+}
+
+.control-container {
+  color: #222;
 }
 </style>

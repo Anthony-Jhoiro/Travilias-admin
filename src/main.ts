@@ -1,8 +1,11 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
+  faCalendar,
   faCheck,
   faChevronLeft,
   faChevronRight,
+  faCog,
+  faFlag,
   faLanguage,
   faReply,
   faThumbtack
@@ -27,6 +30,8 @@ import App from "./App.vue";
 import { KeycloakProvider } from "./keycloak-provider";
 import router from "./router";
 import { store } from "./stores";
+import Tooltip from "primevue/tooltip";
+import Sidebar from 'primevue/sidebar';
 
 // Add icons
 library.add(faLanguage);
@@ -35,6 +40,9 @@ library.add(faThumbtack);
 library.add(faCheck);
 library.add(faChevronLeft);
 library.add(faChevronRight);
+library.add(faCog);
+library.add(faFlag);
+library.add(faCalendar)
 
 KeycloakProvider((keycloak) => {
   createApp(App)
@@ -50,6 +58,8 @@ KeycloakProvider((keycloak) => {
     .component("Textarea", Textarea)
     .component("Galleria", Galleria)
     .component("Chip", Chip)
+    .component("Sidebar", Sidebar)
+    .directive('tooltip', Tooltip)
 
     // Add font awesome
     .component("font-awesome-icon", FontAwesomeIcon)
