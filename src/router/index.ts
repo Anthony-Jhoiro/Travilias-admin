@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import { ImagesPage } from "../components/pages/images";
 import { PostsPage } from "../components/pages/posts";
 import SuggestionsPage from "../components/pages/suggestions";
+import PinsPage from "../components/pages/pins";
 import { DefaultComponent } from "../components/shared";
 
 const routes: RouteRecordRaw[] = [
@@ -19,7 +20,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: "/pins",
-    component: DefaultComponent,
+    component: PinsPage,
   },
   {
     path: "/posts",
