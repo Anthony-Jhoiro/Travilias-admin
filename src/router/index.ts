@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import { ImagesPage } from "../components/pages/images";
+import { PostsPage } from "../components/pages/posts";
 import SuggestionsPage from "../components/pages/suggestions";
 import BanListPage from "../components/pages/banlist";
 import PinsPage from "../components/pages/pins";
@@ -24,7 +25,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: "/posts",
-    component: DefaultComponent,
+    component: PostsPage,
   },
   {
     path: "/statistics",
