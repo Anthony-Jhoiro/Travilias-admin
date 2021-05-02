@@ -3,8 +3,6 @@ import { ImagesPage } from "../components/pages/images";
 import { PostsPage } from "../components/pages/posts";
 import SuggestionsPage from "../components/pages/suggestions";
 import BanListPage from "../components/pages/banlist";
-import PinsPage from "../components/pages/pins";
-import { DefaultComponent } from "../components/shared";
 
 const routes: RouteRecordRaw[] = [
   {
