@@ -37,11 +37,6 @@ export default defineComponent({
           icon: "fa-comment",
         },
         {
-          name: "Épingles",
-          path: "/pins",
-          icon: "fa-thumbtack",
-        },
-        {
           name: "Images",
           path: "/images",
           icon: "fa-images",
@@ -55,11 +50,6 @@ export default defineComponent({
           name: "Banish Words",
           path: "/banlist",
           icon: "fa-ban",
-        },
-        {
-          name: "Statistics",
-          path: "/statistics",
-          icon: "fa-chart-line",
         },
       ],
     };
