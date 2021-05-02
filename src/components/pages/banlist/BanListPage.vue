@@ -5,7 +5,7 @@
     </div>
   </div>
   <div class="addWordDiv">
-    <InputText type="text" v-model="newWord" class="inputtext"/>
+    <InputText type="text" v-model="newWord" class="inputtext" />
     <Button label="Enregistrer" @click="register" class="button"/>
   </div>
 </template>
@@ -48,6 +48,7 @@
             word: this.newWord,
             language: "fr-Fr",
           };
+          this.newWord = "";
           postBanWord(newBanWord).then((data) => {
             this.addbanList(formatBanWord(data.banWord));
           });
