@@ -3,10 +3,10 @@ import { store } from "../stores";
 import { ControlType, Posts } from "../types";
 import { HTTPMethods, makeRequest } from "./request";
 
-export async function getPosts(limit: number, offset: number, start: Date) {
+export async function getPosts(limit: number, page: number, start: Date) {
   let url = "/post?";
   if (limit) url += "limit=" + limit + "&";
-  if (offset) url += "offset=" + offset + "&";
+  if (page) url += "page=" + page + "&";
   if (start) url += "start=" + start.toISOString();
 
   const _posts = await makeRequest<Posts[]>(HTTPMethods.GET, url);

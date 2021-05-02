@@ -9,6 +9,9 @@
         @onCheck="() => control(post.id, 'VALID')"
       />
     </div>
+    <div class="next-button-container">
+    <button class="button-next" @click="next">Suite</button>
+    </div>
 
     <Sidebar v-model:visible="sidebarOpen" position="right">
       <h2>Signalements</h2>
@@ -36,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import { useStore } from "vuex";
 import { controlPost, getPosts } from "../../../api/posts";
 import PostPanel from "./PostPanel.vue";
@@ -52,7 +55,14 @@ export default defineComponent({
     ControlPanel,
   },
   setup() {
-    getPosts(10, 0, new Date());
+    const page = ref(0);
+    const startDate = ref(new Date());
+    getPosts(10, page.value, startDate.value);
+
+    return {
+      page,
+      startDate
+    }
   },
   computed: {
     posts() {
@@ -70,6 +80,10 @@ export default defineComponent({
       this.activeReports = post.reports;
       this.sidebarOpen = true;
     },
+    next() {
+      this.page++;
+      getPosts(10, this.page, this.startDate);
+    }
   },
   data() {
     return {
@@ -98,5 +112,21 @@ export default defineComponent({
 
 .control-container {
   color: #222;
+}
+
+.next-button-container {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+  
+}
+.button-next {
+  font-size: 1.5rem;
+  background-color: #82b4db;
+  color: #fff;
+  padding: 7px 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
 }
 </style>
