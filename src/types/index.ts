@@ -217,3 +217,13 @@ export function formatAnswer(answer:any):Answer | null {
   }
   return ans;
 }
+
+export function formatBanWord(banWord:any):BanWord {
+  let banW:BanWord = {
+    id: banWord._id,
+    language: banWord._language,
+    word: banWord._word,
+  }
+
+  return banW;
+}
