@@ -20,16 +20,8 @@ const routes: RouteRecordRaw[] = [
     component: BanListPage,
   },
   {
-    path: "/pins",
-    component: PinsPage,
-  },
-  {
     path: "/posts",
     component: PostsPage,
-  },
-  {
-    path: "/statistics",
-    component: DefaultComponent,
   },
   {
     path: "/images",
