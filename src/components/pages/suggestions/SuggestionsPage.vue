@@ -12,7 +12,8 @@
 </template>
 
 <script lang="ts">
-    import { defineComponent } from 'vue'
+    import { useStore } from 'vuex';
+    import { computed, defineComponent } from 'vue'
 
     // api
     import SuggestionsController from "../../../api/suggestions";
@@ -31,22 +32,12 @@
         },
         data() {
             return {
-                suggestions: Array<Suggestion>(),
                 users: Array<User>(),
                 color: "00ffff",
 
+                suggestionToAnswer: null as Suggestion | null,
+
                 displayAnswer: false,
-                suggestionToAnswer: {
-                id: "",
-                message: "",
-                user: {
-                    id: "",
-                    displayedName: "",
-                    username: "",
-                    email: "",
-                },
-                createdAt: ""
-                } as Suggestion,
                 
                 answer: {
                     suggestion: null,
@@ -58,36 +49,27 @@
                 page: 0,
             }
         },
-        mounted() {
-            SuggestionsController.getSuggestions(this.page, this.nbSuggestion).then((res:any) => {
-                let suggestions = [];
-                for(let datum of res){
-                    suggestions.push(formatSuggestion(datum));
-                }
-                this.suggestions = suggestions;
-            });
+        setup() {
+            const store = useStore();
+
+            SuggestionsController.getSuggestions(0, 10);
+
+            return {
+                suggestions: computed(() => store.getters.getSuggestions),
+            }
         },
         methods: {
             displayAnswerModale(suggestion:Suggestion) {
                 this.suggestionToAnswer = suggestion;
                 this.displayAnswer = true;
             },
-            answerSent(answer:Answer){
+            answerSent(){
                 this.displayAnswer = false;
-                if(answer){
-                    this.suggestionToAnswer.answer = answer;
-                    this.suggestions[this.suggestions.indexOf(this.suggestionToAnswer)].answer = answer;
-                }
+                this.suggestionToAnswer = null;
             },
             plusSuggestion(){
                 this.page++;
-                SuggestionsController.getSuggestions(this.page, this.nbSuggestion).then((res:any) => {
-                    let suggestions = [];
-                    for(let datum of res){
-                        suggestions.push(formatSuggestion(datum));
-                    }
-                    this.suggestions = this.suggestions.concat(suggestions);
-                });
+                SuggestionsController.addSuggestions(this.page, this.nbSuggestion);
             }
         },
         props: {

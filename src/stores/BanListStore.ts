@@ -1,4 +1,3 @@
-import { createStore } from "vuex";
 import { BanWord } from "../types";
 
 export interface BanListStore {
