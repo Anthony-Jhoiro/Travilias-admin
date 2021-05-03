@@ -34,6 +34,7 @@
       <div class="control-container">
         <control-panel @control="(ctrl) => control(selectedToBeControlled.id, ctrl)" />
       </div>
+       <Button label="Annuler" @click="() => selectedToBeControlled = false" class="button"/>
     </Dialog>
   </div>
 </template>
