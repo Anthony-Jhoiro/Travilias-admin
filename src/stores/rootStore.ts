@@ -3,6 +3,7 @@ import { authenticationStore } from "./authenticationStore";
 import { imagesStore } from "./imagesStore";
 import { banListStore } from "./BanListStore";
 import { postsStore } from "./postsStore";
+import { suggestionsStore } from "./suggestionStore";
 
 /**
  * Main Vuex store of the application
@@ -28,5 +29,6 @@ export const store = createStore({
      * Banlist manager
      */
     banList: banListStore,
+    suggestions: suggestionsStore,
   }
 });
