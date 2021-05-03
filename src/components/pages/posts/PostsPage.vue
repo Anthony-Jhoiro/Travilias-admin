@@ -114,6 +114,11 @@ export default defineComponent({
   color: #222;
 }
 
+.repports {
+  overflow-y: scroll;
+  max-height: calc(100vh - 101px)
+}
+
 .next-button-container {
   width: 100%;
   text-align: center;
