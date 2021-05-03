@@ -2,10 +2,8 @@ import { BanWord } from "../types";
 import { HTTPMethods, makeRequest } from "./request";
 
 
-async function getBanWords(){
-  
+async function getBanWords(){  
   return await makeRequest<BanWord[]>(HTTPMethods.GET, "/banword");
-
 }
 
 async function postBanWord(banword:BanWord):Promise<{banWord:BanWord}>{
