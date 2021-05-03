@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, PropType } from 'vue'
+  import { defineComponent } from 'vue'
   import SuggestionsController from '../../../../api/suggestions';
   import { Answer, Suggestion } from '/@/types';
   export default defineComponent({
@@ -42,8 +42,7 @@
       }
     },
     methods: {
-      answerTo() {       
-        // const toast = useToast();
+      answerTo() {
         if(this.suggestion && this.answer){
           this.answer.suggestion_id = this.suggestion.id;
           SuggestionsController.answer(this.answer, this.suggestion).then((ans:Answer) => {

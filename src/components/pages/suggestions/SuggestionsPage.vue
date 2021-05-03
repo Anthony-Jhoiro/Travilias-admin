@@ -17,7 +17,7 @@
 
     // api
     import SuggestionsController from "../../../api/suggestions";
-    import { Answer, formatSuggestion, Suggestion, User } from '../../../types';
+    import { Suggestion, User } from '../../../types';
     import { SuggestionCard, SuggestionAnswerModale } from './parts';
 
     // icons

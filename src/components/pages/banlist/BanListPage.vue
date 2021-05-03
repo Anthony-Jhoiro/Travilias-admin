@@ -1,7 +1,7 @@
 <template>
   <div class="scrollContainer">
     <div class="banwContainer" v-if="banList">
-      <ban-word-component v-for="banword in banList" :banword="banword" :key="banword.id" @removed="majBanList"/>
+      <ban-word-component v-for="banword in banList" :banword="banword" :key="banword.id"/>
     </div>
   </div>
   <div class="addWordDiv">
@@ -29,15 +29,10 @@
     setup() {
       const store = useStore();
 
-      getBanWords().then((data:BanWord[]) => {
-        store.commit('setBanList', data.map(formatBanWord));
-      });
-      
+      getBanWords();
 
       return {
         banList: computed(() => store.getters.getBanList),
-        addbanList: (banword:BanWord) => {store.commit('addBanList', banword)},
-        setBanList: (banword:BanWord) => {store.commit('setBanList', banword)},
       }
     },
     methods: {
@@ -49,17 +44,12 @@
             language: "fr-Fr",
           };
           this.newWord = "";
-          postBanWord(newBanWord).then((data) => {
-            this.addbanList(formatBanWord(data.banWord));
-          });
+          postBanWord(newBanWord);
         }
         else {
           console.info("un mot vide ne peut être enregistré");
         }
       },
-      majBanList(dataList:any){
-        this.setBanList(dataList.map(formatBanWord));
-      }
     },
     props: {
 

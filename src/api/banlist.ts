@@ -1,19 +1,26 @@
-import { BanWord } from "../types";
+import { store } from "../stores";
+import { BanWord, formatBanWord } from "../types";
 import { HTTPMethods, makeRequest } from "./request";
 
 
 async function getBanWords(){
   
-  return await makeRequest<BanWord[]>(HTTPMethods.GET, "/banword");
+  const banWords = await makeRequest<BanWord[]>(HTTPMethods.GET, "/banword");
+
+  store.commit('setBanList', banWords.map(formatBanWord));
 
 }
 
-async function postBanWord(banword:BanWord):Promise<{banWord:BanWord}>{
-  return await makeRequest<{banWord:BanWord}>(HTTPMethods.POST, "/banword", banword);
+async function postBanWord(banword:BanWord):Promise<void>{
+  const {banWord} = await makeRequest<{banWord:BanWord}>(HTTPMethods.POST, "/banword", banword);
+
+  store.commit('addBanList', formatBanWord(banWord));
 }
 
-async function deleteBanWord(banwordId:string):Promise<{banWords:BanWord[]}>{
-  return await makeRequest<{banWords:BanWord[]}>(HTTPMethods.DELETE, "/banword/" + banwordId);
+async function deleteBanWord(banwordId:string):Promise<void>{
+  const {banWords} = await makeRequest<{banWords:BanWord[]}>(HTTPMethods.DELETE, "/banword/" + banwordId);
+
+  store.commit('setBanList', banWords.map(formatBanWord));
 }
 
 export {

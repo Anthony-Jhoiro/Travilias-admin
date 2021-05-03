@@ -22,9 +22,7 @@ import { deleteBanWord } from '../../../../api/banlist';
     methods: {
       remove(){
         if(this.banword && this.banword.id){
-          deleteBanWord(this.banword.id).then((data:{banWords:BanWord[]}) => {
-            this.$emit("removed", data.banWords);
-          })
+          deleteBanWord(this.banword.id);
         }
       }
     },
