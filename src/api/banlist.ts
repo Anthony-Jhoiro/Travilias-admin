@@ -3,6 +3,7 @@ import { BanWord, formatBanWord } from "../types";
 import { HTTPMethods, makeRequest } from "./request";
 
 
+
 async function getBanWords(){
   
   const banWords = await makeRequest<BanWord[]>(HTTPMethods.GET, "/banword");

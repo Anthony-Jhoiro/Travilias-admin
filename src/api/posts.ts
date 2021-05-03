@@ -3,6 +3,12 @@ import { store } from "../stores";
 import { ControlType, Posts } from "../types";
 import { HTTPMethods, makeRequest } from "./request";
 
+/**
+ * Fetch the API to get posts and populate the store
+ * @param limit number of posts to retrieve
+ * @param page number of limit to skip
+ * @param start date of the first search (for pagination)
+ */
 export async function getPosts(limit: number, page: number, start: Date) {
   let url = "/post?";
   if (limit) url += "limit=" + limit + "&";
@@ -22,7 +28,12 @@ export async function getPosts(limit: number, page: number, start: Date) {
   }
 }
 
-
+/**
+ * Control a post and update the store
+ * @param postId id of the post to control
+ * @param control type of control to apply to the post
+ * @returns 
+ */
 export async function controlPost(postId: string, control: ControlType) {
   if (!postId || !control) return;
   let url = `/post/${postId}`;
