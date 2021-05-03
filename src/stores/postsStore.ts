@@ -5,11 +5,19 @@ interface PostStoreState {
   posts: Posts[];
 }
 
+/**
+ * Vuex store to manage post list
+ */
 export const postsStore = {
   state: () => ({
     posts: [],
   }),
   mutations: {
+    /**
+     * Filter and add posts to the list of posts
+     * @param state state to update
+     * @param posts posts to add
+     */
     addPosts(state: PostStoreState, posts: Posts[]) {
       // Remove already used posts
       posts = posts.filter(
@@ -19,9 +27,20 @@ export const postsStore = {
       // Add posts to list
       state.posts = [...state.posts, ...posts];
     },
+    
+    /**
+     * Clear the list of posts
+     * @param state state to update
+     */
     clearPosts(state: PostStoreState) {
       state.posts = [];
     },
+
+    /**
+     * Find and update a post in the state
+     * @param state  state to update
+     * @param post post to update with new infos
+     */
     updatePost(state: PostStoreState, post: Posts) {
       const index = state.posts.findIndex((p) => p.id === post.id);
 
