@@ -3,7 +3,7 @@ import { HTTPMethods, makeRequest } from "./request";
 import { store } from "../stores";
 
 /**
- * Fetch the API to get images list
+ * Fetch the API to get images list and populate the store
  * @param limit number of result to fetch
  * @param page number of limit element to be skip
  * @param after date after wich we start fetching results
@@ -33,7 +33,7 @@ export async function getImages(
 }
 
 /**
- * Send a request to the API to control an image
+ * Send a request to the API to control an image and update the store
  * @param imageId image to control
  * @param controlType type of control
  * @returns the controlled image
