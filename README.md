@@ -12,8 +12,6 @@ Une preview de l'application est disponible : [Preview](http://admin.travilias.c
 ## Architecture
 ![Schema d'architecture](./docs/architecture.png)
 
-**Suite a plusieurs problèmes dues au déploiement de Keycloak, l'utilisation du HTTPS n'a pas été possible. Si vous utilisez le lien de preview ci dessus (le lien de la preview ci-dessus est bien en HTTP). Par conséquent nous recommandons de ne pas utiliser de mot de passe trop sensible.**
-
 Afin de minimiser les coûts de mise en production, l'application est déployé à travers divers services. Les parties Backend et Front end sont disponibles sur Heroku. Le serveur d'authentification Keycloak tourne sur Azure App service et l base de donnée est gérée par MongoDB Atlas. 
 
 Suite à des problèmes SSL côté Azure, la connection au serveur d'authentification n'est pas suffisamment sécurisée, c'est pourquoi, **nous recommandons l'utilisation de mot de passe non sensibles pour la création de compte**. 
