@@ -56,15 +56,24 @@ export default defineComponent({
   },
   data() {
     return {
+      /**
+       * Boolean defining the state of the sidebar (open = true; close = false)
+       */
       open: false,
     };
   },
   methods: {
+    /**
+     * Switch the open data value
+     */
     toggleOpening() {
       this.open = !this.open;
     },
   },
   computed: {
+    /**
+     * Return the current user displayed name from the store
+     */
     displayedName() {
       const store = useStore();
       const profile = store.getters.profile;

@@ -2,7 +2,7 @@
 
 Ce projet sert d'interface d'administration à l'application Travilias (voir : [documentation travilias](./docs/Travilias.md))
 
-Une preview de l'application est disponible : ![Preview](https://travilias-admin.herokuapp.com)
+Une preview de l'application est disponible : [Preview](http://admin.travilias.com)
 
 ## Mise en place
 

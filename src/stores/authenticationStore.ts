@@ -1,10 +1,16 @@
 import Keycloak from "keycloak-js";
-import { createStore } from "vuex";
 
 export interface AuthenticationStoreOptions {
   keycloak: Keycloak.KeycloakInstance | null
 }
 
+/**
+ * Vuex store to manage authentications
+ * 
+ * the keycloak instance is kept in the state
+ * 
+ * The profile infos and the authentication token are available as getters
+ */
 export const authenticationStore = {
   state: () => ({
     keycloak: null

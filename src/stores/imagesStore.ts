@@ -4,6 +4,9 @@ interface ImagesStoreState {
   images: Image[];
 }
 
+/**
+ * Vuex store to manage images list
+ */
 export const imagesStore = {
   state: () => ({
     images: [],
