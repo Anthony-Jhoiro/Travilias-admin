@@ -13,7 +13,7 @@
         :center="markerOptions.position"
         :zoom="15"
       >
-        <Marker :options="{ postions: markerOptions }" />
+        <Marker :options="{ position: markerOptions.position }" />
       </GoogleMap>
     </div>
     <div class="images">
