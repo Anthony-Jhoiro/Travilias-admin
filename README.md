@@ -23,11 +23,11 @@ Ce projet est une interface d'admin pour une autre application de partage de pho
 
 ### Suggestions
 
-Il s'agit de la page d'arrivée. Elle permet de voir les différentes suggestions faites par les utilisateurs et d'y répondre (attention, une fois une réponse données, elle est envoyée par mail et donc pas modifiable)
+Il s'agit de la page d'arrivée. Elle permet de voir les différentes suggestions faites par les utilisateurs et d'y répondre (attention, une fois une réponse donnée, elle est envoyée par mail et donc pas modifiable)
 
 ### Posts
 
-Sur cette page, on peut voir l'intégralité des posts de l'application (si l'application a du succès, le but sera d'affiher seulement ceux qui ont été signalés). On peut voir toutes les informations à propos du post. On peut aussi décider de supprimer ou d'empêcher la diffusion du post en signalant un manquement au règlement (copyright, violence...). Enfin on peut voir si d'autres utilisateurs ont déjà signalé ces posts pour ces même raisons.
+Sur cette page, on peut voir l'intégralité des posts de l'application (si l'application a du succès, le but sera d'afficher seulement ceux qui ont été signalés). On peut voir toutes les informations à propos du post. On peut aussi décider de supprimer ou d'empêcher la diffusion du post en signalant un manquement au règlement (copyright, violence...). Enfin on peut voir si d'autres utilisateurs ont déjà signalé ces posts pour ces mêmes raisons.
 
 ### Images
 
