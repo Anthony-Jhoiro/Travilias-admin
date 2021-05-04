@@ -59,14 +59,24 @@
             }
         },
         methods: {
+            /**
+             * display the answer modale
+             * @param suggestion the suggestion we answer
+             */
             displayAnswerModale(suggestion:Suggestion) {
                 this.suggestionToAnswer = suggestion;
                 this.displayAnswer = true;
             },
+            /**
+             * called when an answer modale has sent an answer : close the modale and set the suggestion to answer to null
+             */
             answerSent(){
                 this.displayAnswer = false;
                 this.suggestionToAnswer = null;
             },
+            /**
+             * add the number of displayed suggestions
+             */
             plusSuggestion(){
                 this.page++;
                 SuggestionsController.addSuggestions(this.page, this.nbSuggestion);

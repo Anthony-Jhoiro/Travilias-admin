@@ -47,6 +47,9 @@
       },
     },
     computed: {
+      /**
+       * Format the date to have a french display
+       */
       suggestionDate() {
         const mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
         if(this.suggestion){

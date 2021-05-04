@@ -42,10 +42,14 @@
       }
     },
     methods: {
+      /**
+       * called when the user validate the answer, to send the answer
+       */
       answerTo() {
         if(this.suggestion && this.answer){
           this.answer.suggestion_id = this.suggestion.id;
           SuggestionsController.answer(this.answer, this.suggestion).then((ans:Answer) => {
+            // nous voulions afficher une notification lorsqu'une réponse était envoyée mais le toast de primevue buggait
               /* if(ans){
                 toast.add({severity:'success', summary: ans.message, life: 3000});
               }
@@ -62,6 +66,9 @@
           });
         }
       },
+      /**
+       * called when the user don't validate the answer : set the answer infos to null
+       */
       cancel() {
         console.log(this.suggestion);
         if(this.suggestion?.answer){

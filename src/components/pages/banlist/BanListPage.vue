@@ -36,6 +36,9 @@
       }
     },
     methods: {
+      /**
+       * register a banword in db and in the store
+       */
       register(){
         if(this.newWord){
           const newBanWord = {
