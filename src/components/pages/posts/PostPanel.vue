@@ -13,7 +13,7 @@
         :center="markerOptions.position"
         :zoom="15"
       >
-        <Marker :options="{ postions: markerOptions }" />
+        <Marker :options="{ position: markerOptions.position }" />
       </GoogleMap>
     </div>
     <div class="images">
@@ -52,7 +52,7 @@
     </div>
 
     <div class="control-state" v-if="post.controlType">
-      <p>Controlled at {{ formatDate(post.controlledAt) }}</p>
+      <p>Controlled at {{ formatControlDate }}</p>
       <p>Controlled as {{ post.controlType }}</p>
     </div>
   </div>
@@ -97,15 +97,17 @@ export default defineComponent({
     onCheck() {
       this.$emit("onCheck");
     },
-    formatDate(date: Date): string {
-      const year = date.getFullYear();
-      const month = date.getMonth();
-      const day = date.getDay();
-      const hour = date.getHours();
-      const mins = date.getMinutes();
+  },
+  computed: {
+    formatControlDate(): string {
+      const year = this.post.controlledAt.getFullYear();
+      const month = this.post.controlledAt.getMonth();
+      const day = this.post.controlledAt.getDay();
+      const hour = this.post.controlledAt.getHours();
+      const mins = this.post.controlledAt.getMinutes();
 
       return `${year}-${month}-${day} ${hour}:${mins}`;
-    },
+    }
   },
   props: {
     post: { type: Object, required: true },
