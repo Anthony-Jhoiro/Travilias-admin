@@ -25,15 +25,15 @@ Ce projet est une interface d'admin pour une autre application de partage de pho
 
 Il s'agit de la page d'arrivée. Elle permet de voir les différentes suggestions faites par les utilisateurs et d'y répondre (attention, une fois une réponse donnée, elle est envoyée par mail et donc pas modifiable)
 
-### Posts
-
-Sur cette page, on peut voir l'intégralité des posts de l'application (si l'application a du succès, le but sera d'afficher seulement ceux qui ont été signalés). On peut voir toutes les informations à propos du post. On peut aussi décider de supprimer ou d'empêcher la diffusion du post en signalant un manquement au règlement (copyright, violence...). Enfin on peut voir si d'autres utilisateurs ont déjà signalé ces posts pour ces mêmes raisons.
-
 ### Images
 
 Cette page ressemble un peu au post, à la différence que ce sont les images envoyés par les utilisateurs que l'on voit, et que l'on peut contrôler.
 
-### Ban liste
+### Posts
+
+Sur cette page, on peut voir l'intégralité des posts de l'application (si l'application a du succès, le but sera d'afficher seulement ceux qui ont été signalés). On peut voir toutes les informations à propos du post. On peut aussi décider de supprimer ou d'empêcher la diffusion du post en signalant un manquement au règlement (copyright, violence...). Enfin on peut voir si d'autres utilisateurs ont déjà signalé ces posts pour ces mêmes raisons.
+
+### Ban list
 
 Cette page permet de voir, d'ajouter et de supprimer des mots ou expressions interdits (le but est à terme que les posts qui contiennent ces mots ou expressions ne soient pas publiquement visible, voire même supprimés)
 
